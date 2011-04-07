@@ -24,7 +24,6 @@ class RecordsController extends AppController {
 
     }
 
-
     function add($domain_id = null) {
         $this->set('title_for_layout', __('Add a record', true));
 

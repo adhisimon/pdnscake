@@ -20,15 +20,4 @@ class Domain extends AppModel {
     var $order = array(
         'Domain.name',
     );
-
-    /**
-     * get SOA of a domain
-     *
-     * @params int $domain_id id of requested domain
-     * @return string SOA of requested domain
-     */
-    function getSOA($domain_id) {
-        $domain = $this->read(null, $domain_id);
-        return 'cek';
-    }
 }

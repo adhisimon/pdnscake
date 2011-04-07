@@ -29,6 +29,8 @@ class DomainsController extends AppController {
 
     function view($id) {
         $this->Domain->id = $id;
+        $this->set('id', $id);
+
         $domain = $this->Domain->read();
         $this->set('domain', $domain);
 
@@ -37,5 +39,18 @@ class DomainsController extends AppController {
 
     function delete($id) {
     }
+
+    function getSOA($id, $return_array = false) {
+        $this->loadModel('Record');
+        return $this->Record->getSOA($id, $return_array);
+    }
+
+    function getSerial($id) {
+        $soa = $this->getSOA($id, true);
+
+        return $soa['serial'];
+    }
+
+
 
 }

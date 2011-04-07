@@ -16,6 +16,6 @@
         Number of records: -
     </li>
     <li>
-        Serial: -
+        Serial: <?php echo $this->requestAction("/domains/getSerial/$id"); ?>
     </li>
 </ul>

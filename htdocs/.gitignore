@@ -1,3 +1,2 @@
-/app/tmp
-/plugins
-/vendors
+app/tmp/cache/persistent/cake_*
+app/tmp/logs/*.log

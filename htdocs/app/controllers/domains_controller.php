@@ -28,6 +28,11 @@ class DomainsController extends AppController {
     }
 
     function view($id) {
+        $this->Domain->id = $id;
+        $domain = $this->Domain->read();
+        $this->set('domain', $domain);
+
+        $this->set('title_for_layout', $domain['Domain']['name']);
     }
 
     function delete($id) {

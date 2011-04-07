@@ -35,11 +35,12 @@ echo $this->Form->input(
     'type',
     array(
         'options' => array(
-            'SOA' => __('SOA (Start of Authority)', true),
             'NS' => __('NS (Name Server)', true),
             'A' => __('A (IPv4 address)', true),
+            'AAAA' => __('AAAA (IPv6 address)', true),
             'CNAME' => __('CNAME (Alias)', true),
             'MX' => __('MX (Mail Exchange)', true),
+            'TXT' => __('TXT (Textual Data)', true),
         )
     )
 );

@@ -301,3 +301,5 @@
  *
  */
 	Cache::config('default', array('engine' => 'File'));
+
+    @include("core.local.php");

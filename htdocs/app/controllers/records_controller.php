@@ -24,10 +24,37 @@ class RecordsController extends AppController {
 
     }
 
-    /*
-    function add() {
+
+    function add($domain_id = null) {
+        $this->set('title_for_layout', __('Add a record', true));
+
+        $this->set('domain_id', $domain_id);
+        $this->set('domains', $this->Record->Domain->find('list'));
+
+        if (!empty($this->data)) {
+
+            $domain_name = $this->Record->Domain->field('name', array('Domain.id' => $this->data['Record']['domain']));
+
+            $this->data['Record']['name'] = trim($this->data['Record']['name']);
+
+            if ($this->data['Record']['name']) {
+                $this->data['Record']['name'] .= ".$domain_name";
+            } else {
+                $this->data['Record']['name'] = $domain_name;
+            }
+
+            $this->data['Record']['change_date'] = time();
+
+            #debug($this->data); die;
+
+            if ($this->Record->save($this->data)) {
+                $this->Session->setFlash(__('Record has been saved', true));
+                $this->redirect(array('action' => 'index'));
+            }
+        }
     }
 
+    /*
     function edit($id) {
     }
 

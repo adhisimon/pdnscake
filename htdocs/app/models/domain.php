@@ -16,4 +16,8 @@ class Domain extends AppModel {
     var $belongsTo = array(
         'User',
     );
+
+    var $order = array(
+        'Domain.name',
+    );
 }

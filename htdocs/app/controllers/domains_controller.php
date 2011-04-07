@@ -16,6 +16,7 @@ class DomainsController extends AppController {
 
     function index() {
         $this->set('title_for_layout', __('Available Domains', true));
+
         $data = $this->paginate('Domain');
         $this->set('data', $data);
     }

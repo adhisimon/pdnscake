@@ -45,6 +45,5 @@ class Record extends AppModel {
         }
 
         return $soa;
-
     }
 }

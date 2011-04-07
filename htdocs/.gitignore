@@ -1,2 +1,4 @@
 app/tmp/cache/persistent/cake_*
 app/tmp/logs/*.log
+app/config/database.php
+app/config/core.local.php

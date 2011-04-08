@@ -95,9 +95,16 @@ class RecordsController extends AppController {
 
     function view($id) {
     }
+    */
 
     function delete($id) {
+        $record = $this->Record->read(null, $id);
+        if (!$this->Auth->user('admin') and ($this->Auth->user('id') != $record['Domain']['user_id'])) {
+            $this->flash($this->Auth->authError, $this->referer());
+        }
+
+        $this->Record->delete($id);
+        $this->redirect($this->referer());
     }
-    */
 
 }

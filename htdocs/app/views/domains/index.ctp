@@ -28,8 +28,9 @@
                 echo $html->link(
                     $domain['Domain']['name'],
                     array(
-                        'action' => 'view',
-                        $domain['Domain']['id']
+                        'controller' => 'records',
+                        'action' => 'index',
+                        'domain_id' => $domain['Domain']['id']
                     )
                 );
 

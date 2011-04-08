@@ -50,7 +50,7 @@ class Record extends AppModel {
         return $soa;
     }
 
-    function incrementSOA($domain_id = null) {
+    function incrementSerial($domain_id = null) {
         $this->skipBeforeSave = true;
 
         if (!$domain_id) {
@@ -64,12 +64,26 @@ class Record extends AppModel {
         $result = $this->updateAll(
             array(
                 'Record.content' => "'$new_soa_content'",
+                'Domain.notified_serial' => $serial,
             ),
             array(
                 'Record.domain_id' => $domain_id,
                 'Record.type' => 'SOA',
             )
         );
+
+        /*
+        $soa_record = $this->find(
+            'first',
+            array(
+                'conditions' => array(
+                    'Record.domain_id' => $domain_id,
+                    'Record.type' => 'SOA',
+                )
+            )
+        );
+        debug($soa_record); die();
+        */
     }
 
     function beforeSave() {
@@ -101,14 +115,14 @@ class Record extends AppModel {
 
     function afterSave($created) {
         if ($created and ($this->data['Record']['type'] != 'SOA')) {
-            $this->incrementSOA($this->data['Record']['domain_id']);
+            $this->incrementSerial($this->data['Record']['domain_id']);
         }
     }
 
     function beforeDelete($cascade) {
         $data = $this->read();
         if ($data and $data['Record']['type'] != 'SOA') {
-            $this->incrementSOA($data['Record']['domain_id']);
+            $this->incrementSerial($data['Record']['domain_id']);
         }
         return true;
     }

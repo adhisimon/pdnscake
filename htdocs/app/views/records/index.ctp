@@ -16,7 +16,7 @@
         <th><?php echo $this->Paginator->sort(__('Value', true), 'Record.content'); ?></th>
         <th><?php echo $this->Paginator->sort(__('TTL', true), 'Record.ttl'); ?></th>
         <th><?php echo $this->Paginator->sort(__('Priority', true), 'Record.prio'); ?></th>
-        <th><?php echo $this->Paginator->sort(__('Modified', true), 'Record.change_date'); ?></th>
+        <th colspan=2><?php echo $this->Paginator->sort(__('Modified', true), 'Record.change_date'); ?></th>
     </tr>
 
     <?php $i = 0; foreach ($data as $record): ?>
@@ -30,6 +30,14 @@
             <td><?php echo $record['Record']['ttl']; ?></td>
             <td><?php echo $record['Record']['prio']; ?></td>
             <td><?php echo $record['Record']['change_date']; ?></td>
+
+            <td class="actions">
+
+                <?php
+                    echo $html->link(__('Delete', true), array('action' => 'delete', $record['Record']['id']));
+                ?>
+
+            </td>
 
         </tr>
 

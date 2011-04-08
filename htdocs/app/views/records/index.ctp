@@ -38,7 +38,7 @@
             <td><?php echo $record['Record']['prio']; ?></td>
             <td><?php echo $record['Record']['content']; ?></td>
             <td><?php echo $record['Record']['ttl']; ?></td>
-            <td><?php echo $record['Record']['change_date']; ?></td>
+            <td><?php echo date("Y-m-d H-i-s", $record['Record']['change_date']); ?></td>
 
             <td class="actions">
 

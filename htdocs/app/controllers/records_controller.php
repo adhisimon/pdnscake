@@ -61,14 +61,22 @@ class RecordsController extends AppController {
     function add() {
         $this->set('title_for_layout', __('Add a record', true));
 
+        $domain_conditions = array();
+
         if (!empty($this->params['named']['domain_id'])) {
             $domain_id = $this->params['named']['domain_id'];
+            $domain_conditions += array('Domain.id' => $domain_id);
         } else {
             $domain_id = 0;
         }
 
         $this->set('domain_id', $domain_id);
-        $this->set('domains', $this->Record->Domain->find('list'));
+
+        if (!$this->Auth->user('admin')) {
+            $domain_conditions += array('Domain.user_id' => $this->Auth->user('id'));
+        }
+
+        $this->set('domains', $this->Record->Domain->find('list', array('conditions' => $domain_conditions)));
 
         if (!empty($this->data)) {
 

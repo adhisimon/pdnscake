@@ -29,6 +29,7 @@
         echo $this->Html->meta('icon');
 
         echo $this->Html->css('cake.generic');
+        echo $this->Html->css('pdnscake');
 
         echo $scripts_for_layout;
     ?>
@@ -36,8 +37,13 @@
 <body>
     <div id="container">
         <div id="header">
-            <h1><?php echo $this->Html->link(__('CakePHP: the rapid development php framework', true), 'http://cakephp.org'); ?></h1>
+            <h1><?php echo $this->Html->link(__('PDNS-Cake: PowerDNS Web UI', true), 'http://cakephp.org'); ?></h1>
         </div>
+        <?php if ($session->read('Auth.User.id')) { ?>
+        <div id="logininformation">
+            You are: <?php echo $session->read('Auth.User.username'); ?>
+        </div>
+        <?php } ?>
         <div id="content">
 
             <?php echo $this->Session->flash(); ?>

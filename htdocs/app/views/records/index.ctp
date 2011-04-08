@@ -36,3 +36,10 @@
     <?php endforeach; ?>
 </table>
 
+<?php
+    $addUrl = array('action' => 'add');
+    if (!empty($this->params['named']['domain_id'])) {
+        $addUrl += array('domain_id' => $this->params['named']['domain_id']);
+    }
+    echo $html->link(__('Add', true), $addUrl);
+?>

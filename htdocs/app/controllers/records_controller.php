@@ -35,8 +35,14 @@ class RecordsController extends AppController {
 
     }
 
-    function add($domain_id = null) {
+    function add() {
         $this->set('title_for_layout', __('Add a record', true));
+
+        if (!empty($this->params['named']['domain_id'])) {
+            $domain_id = $this->params['named']['domain_id'];
+        } else {
+            $domain_id = 0;
+        }
 
         $this->set('domain_id', $domain_id);
         $this->set('domains', $this->Record->Domain->find('list'));
@@ -44,7 +50,7 @@ class RecordsController extends AppController {
         if (!empty($this->data)) {
 
             $this->data['Record']['domain_name'] = $this->Record->Domain->field('name', array('Domain.id' => $this->data['Record']['domain']));
-            #debug($this->data); die;
+            $this->data['Record']['domain_id'] = $this->data['Record']['domain'];
 
             if ($this->Record->save($this->data)) {
                 $this->Session->setFlash(__('Record has been saved', true));

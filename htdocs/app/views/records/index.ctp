@@ -34,7 +34,7 @@
             <td class="actions">
 
                 <?php
-                    echo $html->link(__('Delete', true), array('action' => 'delete', $record['Record']['id']));
+                    echo $html->link(__('Delete', true), array('action' => 'delete', $record['Record']['id']), null, __('Are you sure you want to delete this record?', true));
                 ?>
 
             </td>

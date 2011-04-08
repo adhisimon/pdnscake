@@ -15,8 +15,7 @@
         <th><?php echo $this->Paginator->sort(__('Name', true), 'Domain.name'); ?></th>
         <th><?php echo $this->Paginator->sort(__('Type', true), 'Domain.type'); ?></th>
         <th><?php echo $this->Paginator->sort(__('Owner', true), 'User.username'); ?></th>
-        <th><?php echo $this->Paginator->sort(__('Created', true), 'Domain.created'); ?></th>
-        <th>&nbsp;</th>
+        <th colspan=2><?php echo $this->Paginator->sort(__('Created', true), 'Domain.created'); ?></th>
     </tr>
     </thead>
 

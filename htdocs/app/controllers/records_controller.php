@@ -17,17 +17,19 @@ class RecordsController extends AppController {
 
 
     function index() {
-        if (!empty($this->params['named']['domain_id'])) {
-            $this->paginate['conditions']['Record.domain_id'] = $this->params['named']['domain_id'];
+        if (!$this->Auth->user('admin')) {
+            $this->paginate['conditions']['Domain.user_id'] = $this->Auth->user('id');
+        }
 
-            $domain_conditions = array('Domain.id' => $this->params['named']['domain_id']);
-            if (!$this->Auth->user('admin')) {
-                $domain_conditions += array('Domain.user_id' => $this->Auth->user('id'));
-            }
-            $domain_name = $this->Record->Domain->field('name', $domain_conditions);
+        if (!empty($this->params['named']['domain_id'])) {
+
+            $this->paginate['conditions']['Domain.id'] = $this->params['named']['domain_id'];
+
+            $domain_name = $this->Record->Domain->field('name', $this->paginate['conditions']);
             if (!$domain_name) {
                 $this->flash($this->Auth->authError, $this->referer());
             }
+
         } else {
             $domain_name = __('All Domains', true);
         }
@@ -58,8 +60,6 @@ class RecordsController extends AppController {
             'Record.prio',
             'Record.content',
         );
-
-        $this->paginate['conditions'] = array();
 
         if (!$this->Auth->user('admin')) {
             $this->paginate['conditions']['Domain.user_id'] = $this->Auth->user('id');

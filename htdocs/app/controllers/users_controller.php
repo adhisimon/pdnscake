@@ -69,6 +69,16 @@ class UsersController extends AppController {
         }
     }
 
+    function view($id = null) {
+        $user = $this->User->read(null, $id);
+        if(!$user) {
+            echo $this->Session->setFlash(__('Invalid Id', true));
+            $this->redirect(array('action' => 'index'));            
+        }
+
+        $this->set(compact('user'));
+    }
+
     function beforeFilter() {
         parent::beforeFilter();
         $this->Auth->allow('*');

@@ -37,7 +37,7 @@ class RecordsController extends AppController {
         $this->set('title_for_layout', __(sprintf('Available Records on %s', $domain_name), true));
 
         $this->Record->virtualFields = array(
-        //non fqdn of Record.name
+            //non fqdn of Record.name
             'simple_name' => 'LEFT(Record.name, LENGTH(Record.name) - LENGTH(Domain.name) - 1)',
         );
 
@@ -109,10 +109,39 @@ class RecordsController extends AppController {
         }
     }
 
-    /*
-    function edit($id) {
-    }
 
+    function edit($id) {
+        $this->set('title_for_layout', __('Edit a record', true));
+
+        $this->Record->id = $id;
+
+        if (empty($this->data)) {
+
+            $this->Record->virtualFields = array(
+                //non fqdn of Record.name
+                'simple_name' => 'LEFT(Record.name, LENGTH(Record.name) - LENGTH(Domain.name) - 1)',
+            );
+
+            $this->data = $this->Record->read();
+
+        } else {
+
+            $user_id = $this->Record->Domain->field('Domain.user_id', array('Domain.id' => $this->data['Record']['domain_id']));
+            if (!$this->Auth->user('admin') and ($this->Auth->user('id') != $user_id)) {
+                $this->redirect($this->referer());
+            }
+
+            $this->data['Record']['domain_name'] = $this->Record->Domain->field('name', array('Domain.id' => $this->data['Record']['domain_id']));
+
+            if ($this->Record->save($this->data)) {
+                $this->Session->setFlash(__('Record has been saved', true));
+                $this->redirect(array('action' => 'index', 'domain_id' => $this->data['Record']['domain_id']));
+            } else {
+                $this->Session->setFlash(__('Failed to save record', true));
+            }
+        }
+    }
+    /*
     function view($id) {
     }
     */

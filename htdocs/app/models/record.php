@@ -101,7 +101,7 @@ class Record extends AppModel {
     }
 
     function afterSave($created) {
-        if ($created and ($this->data['Record']['type'] != 'SOA')) {
+        if ($this->data['Record']['type'] != 'SOA') {
             $this->incrementSerial($this->data['Record']['domain_id']);
         }
     }

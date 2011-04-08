@@ -24,7 +24,8 @@ class Record extends AppModel {
             'type' => 'SOA',
         );
 
-        $soa = $this->field('content', $conditions);
+        $record = $this->find('first', $conditions);
+        $soa = $record['Record']['content'];
 
         if ($return_array) {
 
@@ -42,6 +43,8 @@ class Record extends AppModel {
             if ($serial) {
                 $soa['serial'] = $serial;
             }
+
+            $soa['id'] = $record['Record']['id'];
         }
 
         return $soa;

@@ -8,6 +8,12 @@
 ?>
 <h2><?php echo $title_for_layout; ?></h2>
 
+<?php
+    if (!empty($this->params['named']['domain_id'])) {
+        echo $this->requestAction("/domains/view/" . $this->params['named']['domain_id'], array('return'));
+    }
+?>
+
 <table>
     <tr>
         <th><?php echo $this->Paginator->sort('No.', 'Record.id'); ?></th>

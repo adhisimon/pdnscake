@@ -103,12 +103,14 @@ class Record extends AppModel {
             if ($this->data['Record']['type'] != 'MX') {
                 unset($this->data['Record']['prio']);
             }
-
-            if ($this->data['Record']['type'] != 'SOA') {
-                $this->incrementSOA($this->data['Record']['domain_id']);
-            }
         }
 
         return true;
+    }
+
+    function afterSave($created) {
+        if ($created and ($this->data['Record']['type'] != 'SOA')) {
+            $this->incrementSOA($this->data['Record']['domain_id']);
+        }
     }
 }

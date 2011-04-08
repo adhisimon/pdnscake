@@ -19,6 +19,44 @@ class RecordsController extends AppController {
     function index() {
         $this->set('title_for_layout', __('Available Records', true));
 
+        $this->paginate['joins'] = array(
+            array(
+                'alias' => 'RecordTypeOrder',
+                'table' => 'record_type_orders',
+                'type' => 'LEFT',
+                'conditions' => array(
+                    'Record.type = RecordTypeOrder.name',
+                ),
+            )
+        );
+
+        /*
+        $this->paginate['fields'] = array(
+            'Record.id',
+            'Record.domain_id',
+            'Record.name',
+            'Record.type',
+            'Record.content',
+            'Record.ttl',
+            'Record.prio',
+            'Record.change_date',
+            'Domain.id',
+            'Domain.name',
+            'Domain.user_id',
+            'RecordTypeOrder.name',
+            'RecordTypeOrder.order',
+        );
+        */
+
+
+        $this->paginate['order'] = array(
+            'Record.simple_name',
+            'RecordTypeOrder.order DESC',
+            'Record.type',
+            'Record.prio',
+            'Record.content',
+        );
+
         $this->paginate['conditions'] = array();
 
         if (!$this->Auth->user('admin')) {

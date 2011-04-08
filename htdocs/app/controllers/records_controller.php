@@ -54,7 +54,7 @@ class RecordsController extends AppController {
 
             if ($this->Record->save($this->data)) {
                 $this->Session->setFlash(__('Record has been saved', true));
-                $this->redirect(array('action' => 'index'));
+                $this->redirect(array('action' => 'index', 'domain_id' => $this->data['Record']['domain_id']));
             } else {
                 $this->Session->setFlash(__('Failed to save record', true));
             }

@@ -25,6 +25,8 @@ class AppController extends Controller {
 
     function beforeFilter() {
         $loggedIn = 0;
+
+        $this->Auth->userScope = array('User.active' => 1);
         
         if($this->Auth->user('id')) {
             $loggedIn = 1;

@@ -15,9 +15,6 @@
         Owner: <?php echo $domain['User']['username']; ?>
     </li>
     <li>
-        Number of records: -
-    </li>
-    <li>
         Serial: <?php echo $this->requestAction("/domains/getSerial/$id"); ?>
     </li>
 </ul>

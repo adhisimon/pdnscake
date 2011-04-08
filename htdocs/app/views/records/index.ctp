@@ -15,6 +15,7 @@
 ?>
 
 <table>
+    <thead>
     <tr>
         <th><?php echo $this->Paginator->sort('No.', 'Record.id'); ?></th>
         <th><?php echo $this->Paginator->sort(__('Name', true), 'Record.simple_name'); ?></th>
@@ -24,7 +25,9 @@
         <th><?php echo $this->Paginator->sort(__('Priority', true), 'Record.prio'); ?></th>
         <th colspan=2><?php echo $this->Paginator->sort(__('Modified', true), 'Record.change_date'); ?></th>
     </tr>
+    </thead>
 
+    <tbody>
     <?php $i = 0; foreach ($data as $record): ?>
 
         <tr>
@@ -48,6 +51,7 @@
         </tr>
 
     <?php endforeach; ?>
+    </tbody>
 </table>
 
 <?php

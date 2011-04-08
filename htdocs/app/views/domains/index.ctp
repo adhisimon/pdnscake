@@ -9,6 +9,7 @@
 <h2><?php echo $title_for_layout; ?></h2>
 
 <table>
+    <thead>
     <tr>
         <th><?php echo $this->Paginator->sort('No.', 'Domain.id'); ?></th>
         <th><?php echo $this->Paginator->sort(__('Name', true), 'Domain.name'); ?></th>
@@ -17,7 +18,9 @@
         <th><?php echo $this->Paginator->sort(__('Created', true), 'Domain.created'); ?></th>
         <th>&nbsp;</th>
     </tr>
+    </thead>
 
+    <tbody>
     <?php $i = 0; foreach ($data as $domain): ?>
 
         <tr>
@@ -66,4 +69,5 @@
                 echo $html->link(__('Add Domain', true), array('action' => 'add'));
             ?></td>
         </tr>
+    </tbody>
 </table>

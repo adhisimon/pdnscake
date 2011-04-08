@@ -46,7 +46,7 @@ class Record extends AppModel {
             }
 
             if ($hostmaster) {
-                $soa['hostmasteer'] = $hostmaster;
+                $soa['hostmaster'] = $hostmaster;
             }
 
             if ($serial) {

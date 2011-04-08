@@ -19,6 +19,11 @@ class RecordsController extends AppController {
     function index() {
         $this->set('title_for_layout', __('Available Records', true));
 
+        $this->Record->virtualFields = array(
+        //non fqdn of Record.name
+            'simple_name' => 'LEFT(Record.name, LENGTH(Record.name) - LENGTH(Domain.name) - 1)',
+        );
+
         $this->paginate['joins'] = array(
             array(
                 'alias' => 'RecordTypeOrder',

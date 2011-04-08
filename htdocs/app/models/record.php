@@ -17,15 +17,6 @@ class Record extends AppModel {
         'Domain'
     );
 
-    var $virtualFields = array(
-        //non fqdn of Record.name
-        'simple_name' => 'LEFT(Record.name, LENGTH(Record.name) - LENGTH(Domain.name) - 1)',
-    );
-
-    var $order = array(
-        'Record.simple_name ASC',
-    );
-
     function getSOA($domain_id, $return_array = false) {
 
         $conditions = array(
@@ -112,5 +103,13 @@ class Record extends AppModel {
         if ($created and ($this->data['Record']['type'] != 'SOA')) {
             $this->incrementSOA($this->data['Record']['domain_id']);
         }
+    }
+
+    function beforeDelete($cascade) {
+        $data = $this->read();
+        if ($data and $data['Record']['type'] != 'SOA') {
+            $this->incrementSOA($data['Record']['domain_id']);
+        }
+        return true;
     }
 }

@@ -72,6 +72,11 @@ class RecordsController extends AppController {
 
         if (!empty($this->data)) {
 
+            $user_id = $this->Record->Domain->field('Domain.user_id', array('Domain.id' => $this->data['Record']['domain_id']));
+            if (!$this->Auth->user('admin') and ($this->Auth->user('id') != $user_id)) {
+                $this->redirect($this->referer());
+            }
+
             $this->data['Record']['domain_name'] = $this->Record->Domain->field('name', array('Domain.id' => $this->data['Record']['domain']));
             $this->data['Record']['domain_id'] = $this->data['Record']['domain'];
 

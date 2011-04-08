@@ -41,7 +41,21 @@
         </div>
         <?php if ($session->read('Auth.User.id')) { ?>
         <div id="logininformation">
-            You are: <?php echo $session->read('Auth.User.username'); ?>
+            <?php
+                echo __("You've been logged in as", true);
+                echo " ";
+                echo $html->link(
+                    $session->read('Auth.User.username'),
+                    array(
+                        'controller' => 'users',
+                        'action' => 'view',
+                        $session->read('Auth.User.id')
+                    )
+                );
+                echo " (";
+                echo $html->link(__('Logout', true), array('controller' => 'users', 'action' => 'logout'));
+                echo ") ";
+            ?>
         </div>
         <?php } ?>
         <div id="content">

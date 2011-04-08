@@ -1,3 +1,14 @@
-div#logininformation {
+div #logininformation {
     text-align: right;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+div #logininformation a {
+    color: white;
+    text-decoration: none;
+}
+
+div #logininformation a:hover {
+    color: red;
 }

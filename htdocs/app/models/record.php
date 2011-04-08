@@ -108,9 +108,12 @@ class Record extends AppModel {
 
     function beforeDelete($cascade) {
         $data = $this->read();
-        if ($data and $data['Record']['type'] != 'SOA') {
-            $this->incrementSerial($data['Record']['domain_id']);
+
+        if (!$data or $data['Record']['type'] == 'SOA') {
+            return false;
         }
+
+        $this->incrementSerial($data['Record']['domain_id']);
         return true;
     }
 }

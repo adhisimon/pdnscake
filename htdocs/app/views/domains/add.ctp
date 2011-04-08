@@ -2,8 +2,6 @@
 /**
  * view of .....
  */
-$types = preg_replace('/^enum\(|\)$|\'/', '', $types);
-$types = explode(',', $types);
 ?>
 <fieldset>
     <legend><?php echo __('Add Domain', true); ?></legend>

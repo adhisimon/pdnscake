@@ -2,7 +2,9 @@
 /**
  * view of users/login
  */
+echo $session->flash('auth');
 ?>
+
 <fieldset>
     <?php echo $form->create('User'); ?>
     <?php echo $form->input('username'); ?>

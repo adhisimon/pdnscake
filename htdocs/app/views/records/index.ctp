@@ -11,7 +11,7 @@
 <table>
     <tr>
         <th><?php echo $this->Paginator->sort('No.', 'Record.id'); ?></th>
-        <th><?php echo $this->Paginator->sort(__('Name', true), 'Record.name'); ?></th>
+        <th><?php echo $this->Paginator->sort(__('Name', true), 'Record.simple_name'); ?></th>
         <th><?php echo $this->Paginator->sort(__('Type', true), 'Record.type'); ?></th>
         <th><?php echo $this->Paginator->sort(__('Value', true), 'Record.content'); ?></th>
         <th><?php echo $this->Paginator->sort(__('TTL', true), 'Record.ttl'); ?></th>

@@ -19,7 +19,6 @@ class RecordsController extends AppController {
     function index() {
         $this->set('title_for_layout', __('Available Records', true));
 
-
         $this->paginate['conditions'] = array();
 
         if (!$this->Auth->user('admin')) {

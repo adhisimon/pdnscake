@@ -17,6 +17,10 @@ class Record extends AppModel {
         'Domain'
     );
 
+    var $virtualFields = array(
+        'simple_name' => 'LEFT(Record.name, LENGTH(Record.name) - LENGTH(Domain.name) - 1)',
+    );
+
     function getSOA($domain_id, $return_array = false) {
 
         $conditions = array(

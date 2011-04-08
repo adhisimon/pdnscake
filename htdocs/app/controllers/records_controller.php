@@ -17,7 +17,22 @@ class RecordsController extends AppController {
 
 
     function index() {
-        $this->set('title_for_layout', __('Available Records', true));
+        if (!empty($this->params['named']['domain_id'])) {
+            $this->paginate['conditions']['Record.domain_id'] = $this->params['named']['domain_id'];
+
+            $domain_conditions = array('Domain.id' => $this->params['named']['domain_id']);
+            if (!$this->Auth->user('admin')) {
+                $domain_conditions += array('Domain.user_id' => $this->Auth->user('id'));
+            }
+            $domain_name = $this->Record->Domain->field('name', $domain_conditions);
+            if (!$domain_name) {
+                $this->flash($this->Auth->authError, $this->referer());
+            }
+        } else {
+            $domain_name = __('All Domains', true);
+        }
+
+        $this->set('title_for_layout', __(sprintf('Available Records on %s', $domain_name), true));
 
         $this->Record->virtualFields = array(
         //non fqdn of Record.name
@@ -48,10 +63,6 @@ class RecordsController extends AppController {
 
         if (!$this->Auth->user('admin')) {
             $this->paginate['conditions']['Domain.user_id'] = $this->Auth->user('id');
-        }
-
-        if (!empty($this->params['named']['domain_id'])) {
-            $this->paginate['conditions']['Record.domain_id'] = $this->params['named']['domain_id'];
         }
 
         $data = $this->paginate('Record');

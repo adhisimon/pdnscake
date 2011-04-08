@@ -71,19 +71,6 @@ class Record extends AppModel {
                 'Record.type' => 'SOA',
             )
         );
-
-        /*
-        $soa_record = $this->find(
-            'first',
-            array(
-                'conditions' => array(
-                    'Record.domain_id' => $domain_id,
-                    'Record.type' => 'SOA',
-                )
-            )
-        );
-        debug($soa_record); die();
-        */
     }
 
     function beforeSave() {

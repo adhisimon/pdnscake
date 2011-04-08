@@ -15,6 +15,7 @@
         <th><?php echo $this->Paginator->sort(__('Type', true), 'Domain.type'); ?></th>
         <th><?php echo $this->Paginator->sort(__('Owner', true), 'User.username'); ?></th>
         <th><?php echo $this->Paginator->sort(__('Created', true), 'Domain.created'); ?></th>
+        <th>&nbsp;</th>
     </tr>
 
     <?php $i = 0; foreach ($data as $domain): ?>
@@ -49,6 +50,13 @@
 
             ?></td>
             <td><?php echo $domain['Domain']['created']; ?></td>
+            <td class="actions"><?php
+                echo $html->link(__('Delete', true),
+                    array('action' => 'delete', $domain['Domain']['id']),
+                    null,
+                    sprintf(__("Are you sure want to delete domain name %s", true), $domain['Domain']['name'])
+                );
+            ?></td>
         </tr>
 
     <?php endforeach; ?>

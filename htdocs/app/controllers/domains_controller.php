@@ -52,9 +52,6 @@ class DomainsController extends AppController {
         $this->set(compact('users', 'types'));
     }
 
-    function edit($id) {
-    }
-
     function view($id) {
         $this->Domain->id = $id;
         $this->set('id', $id);
@@ -65,7 +62,19 @@ class DomainsController extends AppController {
         $this->set('title_for_layout', $domain['Domain']['name']);
     }
 
-    function delete($id) {
+    function delete($id = null) {
+        if(!$id) {
+            echo $this->Session->setFlash(__('Invalid Id', true));
+            $this->redirect(array('action' => 'index'));
+        }
+
+        if($this->Domain->delete($id)) {
+            echo $this->Session->setFlash(__('Domain Deleted', true));
+            $this->redirect(array('action' => 'index'));
+        } else {
+            echo $this->Session->setFlash(__('Invalid Id', true));
+            $this->redirect(array('action' => 'index'));
+        }
     }
 
     function getSOA($id, $return_array = false) {

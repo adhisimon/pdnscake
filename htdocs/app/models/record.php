@@ -49,4 +49,24 @@ class Record extends AppModel {
 
         return $soa;
     }
+
+    function beforeSave() {
+        //convert name to fqdn
+        $this->data['Record']['name'] = trim($this->data['Record']['name']);
+        if ($this->data['Record']['name']) {
+            $this->data['Record']['name'] .= "." . $this->data['Record']['domain_name'];
+        } else {
+            $this->data['Record']['name'] = $this->data['Record']['domain_name'];
+        }
+
+        //update change_date
+        $this->data['Record']['change_date'] = time();
+
+        //strip prio
+        if ($this->data['Record']['type'] != 'MX') {
+            unset($this->data['Record']['prio']);
+        }
+
+        return true;
+    }
 }

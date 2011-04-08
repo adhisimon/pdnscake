@@ -32,23 +32,14 @@ class RecordsController extends AppController {
 
         if (!empty($this->data)) {
 
-            $domain_name = $this->Record->Domain->field('name', array('Domain.id' => $this->data['Record']['domain']));
-
-            $this->data['Record']['name'] = trim($this->data['Record']['name']);
-
-            if ($this->data['Record']['name']) {
-                $this->data['Record']['name'] .= ".$domain_name";
-            } else {
-                $this->data['Record']['name'] = $domain_name;
-            }
-
-            $this->data['Record']['change_date'] = time();
-
+            $this->data['Record']['domain_name'] = $this->Record->Domain->field('name', array('Domain.id' => $this->data['Record']['domain']));
             #debug($this->data); die;
 
             if ($this->Record->save($this->data)) {
                 $this->Session->setFlash(__('Record has been saved', true));
                 $this->redirect(array('action' => 'index'));
+            } else {
+                $this->Session->setFlash(__('Failed to save record', true));
             }
         }
     }

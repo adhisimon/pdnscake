@@ -52,11 +52,16 @@ class Record extends AppModel {
 
     function beforeSave() {
         //convert name to fqdn
-        $this->data['Record']['name'] = trim($this->data['Record']['name']);
-        if ($this->data['Record']['name']) {
-            $this->data['Record']['name'] .= "." . $this->data['Record']['domain_name'];
-        } else {
-            $this->data['Record']['name'] = $this->data['Record']['domain_name'];
+        if (!$this->data['Record']['name']) {
+
+            $this->data['Record']['simple_name'] = trim($this->data['Record']['simple_name']);
+
+            if ($this->data['Record']['simple_name']) {
+                $this->data['Record']['name'] = $this->data['Record']['simple_name'] . "." . $this->data['Record']['domain_name'];
+            } else {
+                $this->data['Record']['name'] = $this->data['Record']['domain_name'];
+            }
+
         }
 
         //update change_date

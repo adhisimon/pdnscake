@@ -13,7 +13,7 @@
 echo $this->Form->create('Record');
 
 echo $this->Form->input(
-    'name',
+    'simple_name',
     array(
         'style' => 'width: 30%',
         'div' => false,

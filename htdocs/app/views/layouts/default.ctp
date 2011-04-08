@@ -37,7 +37,7 @@
 <body>
     <div id="container">
         <div id="header">
-            <h1><?php echo $this->Html->link(__('PDNS-Cake: PowerDNS Web UI', true), 'http://cakephp.org'); ?></h1>
+            <h1><?php echo $this->Html->link(__('PDNS-Cake: PowerDNS Web UI', true), '/'); ?></h1>
         </div>
         <?php if ($session->read('Auth.User.id')) { ?>
         <div id="logininformation">

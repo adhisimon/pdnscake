@@ -18,6 +18,7 @@ class Record extends AppModel {
     );
 
     var $virtualFields = array(
+        //non fqdn of Record.name
         'simple_name' => 'LEFT(Record.name, LENGTH(Record.name) - LENGTH(Domain.name) - 1)',
     );
 

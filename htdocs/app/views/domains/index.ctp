@@ -70,3 +70,11 @@
         </tr>
     </tbody>
 </table>
+
+<div class="paging">
+    <?php echo $paginator->first('<< '. __('First', true)); ?>&nbsp;
+    <?php echo $paginator->prev(__('Previous', true), null, null, array('class' => 'disable')); ?>
+    <?php echo $paginator->numbers(); ?>
+    <?php echo $paginator->next(__('Next', true), null, null, array('class' => 'disable')); ?>&nbsp;
+    <?php echo $paginator->last(__('Last', true). ' >>'); ?>
+</div>

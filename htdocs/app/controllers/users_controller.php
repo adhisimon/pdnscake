@@ -17,6 +17,7 @@
  * @author adi surya <adi@mondial.co.id>
  */
 class UsersController extends AppController {
+    var $helpers = array('Time');
 
     function login() {
 
@@ -38,6 +39,23 @@ class UsersController extends AppController {
     function index() {
         $users = $this->paginate('User');
         $this->set(compact('users'));
+    }
+
+    function edit($id = null) {
+        $user = $this->User->read(null, $id);
+        if(empty($user)) {
+            echo $this->Session->setFlash(__('Invalid Id', true));
+            $this->redirect(array('action' => 'index'));
+        }
+
+        if(!empty($this->data)) {
+            $this->User->save($this->data);
+            echo $this->Session->setFlash(__('User Saved', true));
+            $this->redirect(array('action' => 'index'));
+        }
+
+        $this->data = $user;
+
     }
 
     function beforeFilter() {

@@ -31,10 +31,22 @@
                 ?>
             </td>
             <td><?php echo $user['User']['fullname']; ?></td>
-            <td><?php echo $user['User']['admin']; ?></td>
-            <td><?php echo $user['User']['active']; ?></td>
-            <td><?php echo $user['User']['created']; ?></td>
-            <td><?php echo $user['User']['modified']; ?></td>
+            <td><?php
+                if($user['User']['admin']) {
+                    echo __('Admin', true);
+                } else {
+                    echo __('Not Admin', true);
+                }
+            ?></td>
+            <td><?php
+                if($user['User']['active']) {
+                    echo __('Active', true);
+                } else {
+                    echo __('Not Active', true);
+                }
+            ?></td>
+            <td><?php echo $time->niceShort($user['User']['created']); ?></td>
+            <td><?php echo $time->niceShort($user['User']['modified']); ?></td>
             <td class="actions">
                 <?php
                     echo $html->link(__('Edit', true), array('action' => 'edit', $user['User']['id']));

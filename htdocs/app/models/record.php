@@ -22,6 +22,10 @@ class Record extends AppModel {
         'simple_name' => 'LEFT(Record.name, LENGTH(Record.name) - LENGTH(Domain.name) - 1)',
     );
 
+    var $order = array(
+        'Record.simple_name ASC',
+    );
+
     function getSOA($domain_id, $return_array = false) {
 
         $conditions = array(

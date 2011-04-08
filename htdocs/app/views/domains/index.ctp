@@ -49,7 +49,7 @@
                 );
 
             ?></td>
-            <td><?php echo $domain['Domain']['created']; ?></td>
+            <td><?php echo $time->niceShort($domain['Domain']['created']); ?></td>
             <td class="actions"><?php
                 echo $html->link(__('Delete', true),
                     array('action' => 'delete', $domain['Domain']['id']),
@@ -60,4 +60,9 @@
         </tr>
 
     <?php endforeach; ?>
+        <tr>
+            <td colspan="6" class="actions"><?php
+                echo $html->link(__('Add Domain', true), array('action' => 'add'));
+            ?></td>
+        </tr>
 </table>

@@ -85,6 +85,10 @@ class UsersController extends AppController {
     }
 
     function beforeFilter() {
+        if(!$this->Auth->user('admin') && $this->params['action'] != 'login' && $this->params['action'] != 'logout') {
+            echo $this->Session->setFlash(__('You are not authorized to access that location.', true));
+            $this->redirect(array('controller' => 'domains', 'action' => 'index'));            
+        }
         parent::beforeFilter();
     }
 

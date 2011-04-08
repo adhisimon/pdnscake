@@ -58,6 +58,17 @@ class UsersController extends AppController {
 
     }
 
+    function delete($id = null) {
+        if($id) {
+            $this->User->delete($id);
+            echo $this->Session->setFlash(__('User Deleted', true));
+            $this->redirect(array('action' => 'index'));
+        } else {
+            echo $this->Session->setFlash(__('Invalid Id', true));
+            $this->redirect(array('action' => 'index'));
+        }
+    }
+
     function beforeFilter() {
         parent::beforeFilter();
         $this->Auth->allow('*');

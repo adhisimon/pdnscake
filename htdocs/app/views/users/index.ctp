@@ -57,7 +57,7 @@
                             $user['User']['id']
                         ),
                         null,
-                        sprintf(__("Are you sure you want to delete user #%s?", true), $user['User']['username'])
+                        sprintf(__("Are you sure you want to delete user %s?", true), $user['User']['username'])
                     );
                 ?>
 

@@ -29,11 +29,11 @@ class Record extends AppModel {
     function getSOA($domain_id, $return_array = false) {
 
         $conditions = array(
-            'domain_id' => $domain_id,
-            'type' => 'SOA',
+            'Record.domain_id' => $domain_id,
+            'Record.type' => 'SOA',
         );
 
-        $record = $this->find('first', $conditions);
+        $record = $this->find('first', array('conditions' => $conditions));
         $soa = $record['Record']['content'];
 
         if ($return_array) {
@@ -59,26 +59,54 @@ class Record extends AppModel {
         return $soa;
     }
 
-    function beforeSave() {
-        //convert name to fqdn
-        if (!$this->data['Record']['name']) {
+    function incrementSOA($domain_id = null) {
+        $this->skipBeforeSave = true;
 
-            $this->data['Record']['simple_name'] = trim($this->data['Record']['simple_name']);
-
-            if ($this->data['Record']['simple_name']) {
-                $this->data['Record']['name'] = $this->data['Record']['simple_name'] . "." . $this->data['Record']['domain_name'];
-            } else {
-                $this->data['Record']['name'] = $this->data['Record']['domain_name'];
-            }
-
+        if (!$domain_id) {
+            $domain_id = $this->field('Record.domain_id', array('Record.id' => $this->id));
         }
 
-        //update change_date
-        $this->data['Record']['change_date'] = time();
+        $soa_content = $this->getSOA($domain_id, true);
+        $serial = $soa_content['serial'];
+        $new_soa_content = $soa_content['primary_ns'] . ' ' . $soa_content['hostmaster'] . ' ' . ++$serial;
 
-        //strip prio
-        if ($this->data['Record']['type'] != 'MX') {
-            unset($this->data['Record']['prio']);
+        $result = $this->updateAll(
+            array(
+                'Record.content' => "'$new_soa_content'",
+            ),
+            array(
+                'Record.domain_id' => $domain_id,
+                'Record.type' => 'SOA',
+            )
+        );
+    }
+
+    function beforeSave() {
+        if (!isset($this->skipBeforeSave)) {
+            //convert name to fqdn
+            if (!isset($this->data['Record']['name'])) {
+
+                $this->data['Record']['simple_name'] = trim($this->data['Record']['simple_name']);
+
+                if ($this->data['Record']['simple_name']) {
+                    $this->data['Record']['name'] = $this->data['Record']['simple_name'] . "." . $this->data['Record']['domain_name'];
+                } else {
+                    $this->data['Record']['name'] = $this->data['Record']['domain_name'];
+                }
+
+            }
+
+            //update change_date
+            $this->data['Record']['change_date'] = time();
+
+            //strip prio
+            if ($this->data['Record']['type'] != 'MX') {
+                unset($this->data['Record']['prio']);
+            }
+
+            if ($this->data['Record']['type'] != 'SOA') {
+                $this->incrementSOA($this->data['Record']['domain_id']);
+            }
         }
 
         return true;

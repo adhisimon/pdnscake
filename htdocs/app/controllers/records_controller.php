@@ -36,6 +36,7 @@ class RecordsController extends AppController {
         );
 
         $this->paginate['order'] = array(
+            'Domain.name',
             'Record.simple_name',
             'RecordTypeOrder.order DESC',
             'Record.type',

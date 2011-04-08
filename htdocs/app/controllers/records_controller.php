@@ -19,6 +19,17 @@ class RecordsController extends AppController {
     function index() {
         $this->set('title_for_layout', __('Available Records', true));
 
+
+        $this->paginate['conditions'] = array();
+
+        if (!$this->Auth->user('admin')) {
+            $this->paginate['conditions']['Domain.user_id'] = $this->Auth->user('id');
+        }
+
+        if (!empty($this->params['named']['domain_id'])) {
+            $this->paginate['conditions']['Record.domain_id'] = $this->params['named']['domain_id'];
+        }
+
         $data = $this->paginate('Record');
         $this->set('data', $data);
 

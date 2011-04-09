@@ -306,6 +306,37 @@
      * specific pdnscake's configurations
      */
     Configure::write('DefaultPrimaryNS', 'localhost.localdomain');
+    Configure::write(
+        'InitialRecord',
+        array(
+            array(
+                'name' => '__DOMAINNAME__',
+                'type' => 'NS',
+                'content' => 'localhost.localdomain',
+            ),
+            array(
+                'name' => '__DOMAINNAME__',
+                'type' => 'A',
+                'content' => '127.0.0.1',
+            ),
+            array(
+                'name' => 'www.__DOMAINNAME__',
+                'type' => 'CNAME',
+                'content' => '__DOMAINNAME__',
+            ),
+            array(
+                'name' => 'mail.__DOMAINNAME__',
+                'type' => 'A',
+                'content' => '127.0.0.1',
+            ),
+            array(
+                'name' => '__DOMAINNAME__',
+                'type' => 'MX',
+                'prio' => 10,
+                'content' => 'mail.__DOMAINNAME__',
+            )
+        )
+    );
 
     /**
      * include local configuration

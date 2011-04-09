@@ -32,19 +32,10 @@ class Record extends AppModel {
             list($primary_ns, $hostmaster, $serial) = split(" ", $soa, 3);
             $soa = array();
 
-            if ($primary_ns) {
-                $soa['primary_ns'] = $primary_ns;
-            }
-
-            if ($hostmaster) {
-                $soa['hostmaster'] = $hostmaster;
-            }
-
-            if ($serial) {
-                $soa['serial'] = $serial;
-            }
-
             $soa['id'] = $record['Record']['id'];
+            $soa['primary_ns'] = $primary_ns;
+            $soa['hostmaster'] = $hostmaster;
+            $soa['serial'] = $serial;
         }
 
         return $soa;

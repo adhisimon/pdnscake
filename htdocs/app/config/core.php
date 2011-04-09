@@ -306,6 +306,21 @@
      * specific pdnscake's configurations
      */
     Configure::write('DefaultTTL', 86400);
+
+    Configure::write(
+        'AvailableRecordTypes',
+        array(
+            'NS' => __('NS (Name Server)', true),
+            'A' => __('A (IPv4 address)', true),
+            'AAAA' => __('AAAA (IPv6 address)', true),
+            'CNAME' => __('CNAME (Alias)', true),
+            'MX' => __('MX (Mail Exchange)', true),
+            'TXT' => __('TXT (Textual Data)', true),
+            'SRV' => __('SRV', true),
+            'PTR' => __('PTR', true),
+        )
+    );
+
     Configure::write(
         'InitialRecords',
         array(

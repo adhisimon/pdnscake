@@ -59,6 +59,7 @@ class DomainsController extends AppController {
         $this->Domain->id = $id;
         $this->set('id', $id);
 
+        unset($this->Domain->hasMany['Record']);
         $domain = $this->Domain->read();
         $this->set('domain', $domain);
 

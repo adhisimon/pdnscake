@@ -32,6 +32,7 @@ class Domain extends AppModel {
     function afterSave($created) {
         if ($created and ($this->data['Domain']['type'] != 'SLAVE')) {
             $this->createDefaultSOA($this->id);
+            $this->createDefaultNS($this->id);
         }
     }
 
@@ -47,9 +48,29 @@ class Domain extends AppModel {
             Configure::read('DefaultPrimaryNS')
             . ' '
             . 'hostmaster@' . $this->data['Domain']['name']
-            . ' 0';
+            . ' 1';
         $data['Record']['ttl'] = 86400;
         $data['Record']['change_date'] = time();
+
+        $this->Record->create();
+        $this->Record->save($data);
+    }
+
+    function createDefaultNS($id = null) {
+        if (!$id) {
+            $id = $this->id;
+        }
+
+        $data['Record']['domain_id'] = $id;
+        $data['Record']['name'] = $this->data['Domain']['name'];
+        $data['Record']['type'] = 'NS';
+        $data['Record']['content'] = Configure::read('DefaultPrimaryNS');
+        $data['Record']['ttl'] = 86400;
+        $data['Record']['change_date'] = time();
+
+        $this->Record->skipAfterSave = true;
+
+        $this->Record->create();
         $this->Record->save($data);
     }
 }

@@ -51,7 +51,7 @@ echo $this->Form->input(
     'ttl',
     array(
         'label' => __('TTL', true),
-        'default' => 86400,
+        'default' => Configure::read('DefaultTTL'),
     )
 );
 

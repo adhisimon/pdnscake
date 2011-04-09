@@ -16,6 +16,23 @@
 
 <table>
     <thead>
+
+        <tr>
+            <td colspan=8 class="actions">
+
+                <?php
+                    $addUrl = array('action' => 'add');
+                    if (!empty($this->params['named']['domain_id'])) {
+                        $addUrl += array('domain_id' => $this->params['named']['domain_id']);
+                    }
+                    echo $html->link(__('Add a record', true), $addUrl);
+
+                    echo $html->link(__('Refresh', true), $this->params['url']['url']);
+                ?>
+
+            </td>
+        </tr>
+
     <tr>
         <th><?php echo $this->Paginator->sort('No.', 'Record.id'); ?></th>
         <th><?php echo $this->Paginator->sort(__('Name', true), 'Record.simple_name'); ?></th>
@@ -28,6 +45,7 @@
     </thead>
 
     <tbody>
+
     <?php $i = 0; foreach ($data as $record): ?>
 
         <tr>
@@ -64,6 +82,8 @@
                         $addUrl += array('domain_id' => $this->params['named']['domain_id']);
                     }
                     echo $html->link(__('Add a record', true), $addUrl);
+
+                    echo $html->link(__('Refresh', true), $this->params['url']['url']);
                 ?>
 
             </td>

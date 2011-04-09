@@ -305,10 +305,15 @@
     /**
      * specific pdnscake's configurations
      */
-    Configure::write('DefaultPrimaryNS', 'localhost.localdomain');
+    Configure::write('DefaultTTL', 86400);
     Configure::write(
-        'InitialRecord',
+        'InitialRecords',
         array(
+            array(
+                'name' => '__DOMAINNAME__',
+                'type' => 'SOA',
+                'content' => 'localhost.localdomain hostmaster@__DOMAINNAME__ 1',
+            ),
             array(
                 'name' => '__DOMAINNAME__',
                 'type' => 'NS',

@@ -31,46 +31,33 @@ class Domain extends AppModel {
 
     function afterSave($created) {
         if ($created and ($this->data['Domain']['type'] != 'SLAVE')) {
-            $this->createDefaultSOA($this->id);
-            $this->createDefaultNS($this->id);
+            $this->createDefaultRecords($this->id);
         }
     }
 
-    function createDefaultSOA($id = null) {
+    function createDefaultRecords($id = null) {
         if (!$id) {
             $id = $this->id;
         }
 
-        $data['Record']['domain_id'] = $id;
-        $data['Record']['name'] = $this->data['Domain']['name'];
-        $data['Record']['type'] = 'SOA';
-        $data['Record']['content'] =
-            Configure::read('DefaultPrimaryNS')
-            . ' '
-            . 'hostmaster@' . $this->data['Domain']['name']
-            . ' 1';
-        $data['Record']['ttl'] = 86400;
-        $data['Record']['change_date'] = time();
+        $records = Configure::read('InitialRecords');
+        foreach ($records as $record) {
+            $data['Record'] = $record;
 
-        $this->Record->create();
-        $this->Record->save($data);
-    }
+            $data['Record']['domain_id'] = $id;
 
-    function createDefaultNS($id = null) {
-        if (!$id) {
-            $id = $this->id;
+            $data['Record']['name'] = str_replace('__DOMAINNAME__', $this->data['Domain']['name'], $data['Record']['name']);
+            $data['Record']['content'] = str_replace('__DOMAINNAME__', $this->data['Domain']['name'], $data['Record']['content']);
+
+            if (empty($data['Record']['ttl'])) {
+                $data['Record']['ttl'] = Configure::read('DefaultTTL');
+            }
+
+            $data['Record']['change_date'] = time();
+
+            $this->Record->create();
+            $this->Record->skipAfterSave = true;
+            $this->Record->save($data);
         }
-
-        $data['Record']['domain_id'] = $id;
-        $data['Record']['name'] = $this->data['Domain']['name'];
-        $data['Record']['type'] = 'NS';
-        $data['Record']['content'] = Configure::read('DefaultPrimaryNS');
-        $data['Record']['ttl'] = 86400;
-        $data['Record']['change_date'] = time();
-
-        $this->Record->skipAfterSave = true;
-
-        $this->Record->create();
-        $this->Record->save($data);
     }
 }

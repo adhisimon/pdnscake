@@ -27,7 +27,7 @@
                     }
                     echo $html->link(__('Add a record', true), $addUrl);
 
-                    echo $html->link(__('Refresh', true), $this->params['url']['url']);
+                    echo $html->link(__('Refresh', true), '/' . $this->params['url']['url']);
                 ?>
 
             </td>
@@ -83,7 +83,7 @@
                     }
                     echo $html->link(__('Add a record', true), $addUrl);
 
-                    echo $html->link(__('Refresh', true), $this->params['url']['url']);
+                    echo $html->link(__('Refresh', true), '/' . $this->params['url']['url']);
                 ?>
 
             </td>

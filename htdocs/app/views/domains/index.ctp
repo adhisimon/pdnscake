@@ -16,7 +16,7 @@
 
                 <?php
                     echo $html->link(__('Add a Domain', true), array('action' => 'add'));
-                    echo $html->link(__('Refresh', true), $this->params['url']['url']);
+                    echo $html->link(__('Refresh', true), '/' . $this->params['url']['url']);
                 ?>
 
             </td>
@@ -82,7 +82,7 @@
 
                 <?php
                     echo $html->link(__('Add a Domain', true), array('action' => 'add'));
-                    echo $html->link(__('Refresh', true), $this->params['url']['url']);
+                    echo $html->link(__('Refresh', true), '/' . $this->params['url']['url']);
                 ?>
 
             </td>

@@ -18,7 +18,11 @@ class Domain extends AppModel {
     );
 
     var $hasMany = array(
-        'Record',
+        'Record' => array(
+            'className' => 'Record',
+            'dependent' => true,
+            'exclusive' => true,
+        )
     );
 
     var $order = array(

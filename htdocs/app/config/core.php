@@ -305,7 +305,7 @@
     /**
      * specific pdnscake's configurations
      */
-    Configure.write('DefaultPrimaryNS', 'localhost.localdomain');
+    Configure::write('DefaultPrimaryNS', 'localhost.localdomain');
 
     /**
      * include local configuration

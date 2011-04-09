@@ -28,8 +28,20 @@ class DomainsController extends AppController {
     function add() {
 
         if(!empty($this->data)) {
-            $this->Domain->save($this->data);
-            $this->redirect(array('action' => 'index'));
+
+            if ($this->Domain->save($this->data)) {
+
+                $this->Session->setFlash(__('Domain created', true));
+                $this->redirect(array(
+                    'controller' => 'records', 'action' => 'index', 'domain_id' => $this->Domain->id
+                ));
+
+            } else {
+
+                $this->Session->setFlash(__('Failed to create a new domain', true));
+                $this->redirect(array('action' => 'index'));
+
+            }
         }
         $users = $this->Domain->User->find('list');
 

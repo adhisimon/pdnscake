@@ -78,10 +78,13 @@ class DomainsController extends AppController {
         $this->set('title_for_layout', $domain['Domain']['name']);
     }
 
-    function delete($id = null) {
-        if(!$id) {
-            echo $this->Session->setFlash(__('Invalid Id', true));
-            $this->redirect(array('action' => 'index'));
+    function delete($id) {
+        if (!$this->Auth->user('admin')) {
+            $owner_id = $this->Domain->field('Domain.user_id', array('Domain.id' => $id));
+            if ($this->Auth->user('id') != $owner_id) {
+                $this->Session->setFlash($this->Auth->authError);
+                $this->redirect($this->referer());
+            }
         }
 
         if($this->Domain->delete($id)) {

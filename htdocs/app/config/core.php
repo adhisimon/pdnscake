@@ -327,7 +327,7 @@
             array(
                 'name' => '__DOMAINNAME__',
                 'type' => 'SOA',
-                'content' => 'localhost.localdomain hostmaster@__DOMAINNAME__ 1',
+                'content' => 'localhost.localdomain hostmaster@__DOMAINNAME__ __DOMAINSERIAL__',
             ),
             array(
                 'name' => '__DOMAINNAME__',

@@ -48,6 +48,7 @@ class Domain extends AppModel {
 
             $data['Record']['name'] = str_replace('__DOMAINNAME__', $this->data['Domain']['name'], $data['Record']['name']);
             $data['Record']['content'] = str_replace('__DOMAINNAME__', $this->data['Domain']['name'], $data['Record']['content']);
+            $data['Record']['content'] = str_replace('__DOMAINSERIAL__', date('Ymd') . '00', $data['Record']['content']);
 
             if (empty($data['Record']['ttl'])) {
                 $data['Record']['ttl'] = Configure::read('DefaultTTL');

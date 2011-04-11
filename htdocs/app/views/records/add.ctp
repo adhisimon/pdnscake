@@ -11,7 +11,6 @@
 <?php
 
 echo $this->Form->create('Record');
-
 echo $this->Form->input(
     'simple_name',
     array(

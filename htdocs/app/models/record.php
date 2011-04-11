@@ -74,13 +74,31 @@ class Record extends AppModel {
                 'message' => __('CNAME record must be unique', true),
             );
         } elseif ($this->data['Record']['type'] == 'A') {
+
             $this->validate['content'] = array(
                 'rule' => array('ip', 'IPV4'),
                 'message' => __('Please supply a valid IP address', true),
             );
+
+            $this->validate['simple_name'] = array(
+                'rule' => 'noConflictWithCNAME',
+                'message' => __('Record conflicted with CNAME', true),
+            );
         }
 
         return true;
+    }
+
+    function noConflictWithCNAME($check) {
+        $conditions['Record.name'] = $this->data['Record']['name'];
+        $conditions['Record.type'] = 'CNAME';
+
+        if (!empty($this->id)) {
+            $conditions['Record.id <>'] = $this->id;
+        }
+
+        $count = $this->find('count', array('conditions' => $conditions));
+        return !$count;
     }
 
     function createNameFromSimpleName() {

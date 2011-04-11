@@ -65,24 +65,49 @@ class Record extends AppModel {
         );
     }
 
+    function beforeValidate() {
+        $this->createNameFromSimpleName();
+
+        if ($this->data['Record']['type'] == 'CNAME') {
+            $this->validate['name'] = array(
+                'rule' => 'isUnique',
+                'message' => __('CNAME record must be unique', true),
+            );
+        } elseif ($this->data['Record']['type'] == 'A') {
+            $this->validate['content'] = array(
+                'rule' => array('ip', 'IPV4'),
+                'message' => __('Please supply a valid IP address', true),
+            );
+        }
+
+        return true;
+    }
+
+    function createNameFromSimpleName() {
+        if (!isset($this->data['Record']['name'])) {
+
+            $this->data['Record']['simple_name'] = trim($this->data['Record']['simple_name']);
+
+            if ($this->data['Record']['simple_name']) {
+                $this->data['Record']['name'] = $this->data['Record']['simple_name'] . "." . $this->data['Record']['domain_name'];
+            } else {
+                $this->data['Record']['name'] = $this->data['Record']['domain_name'];
+            }
+        }
+    }
+
     function beforeSave() {
         if (!isset($this->skipBeforeSave)) {
+
             //convert name to fqdn
-            if (!isset($this->data['Record']['name'])) {
-
-                $this->data['Record']['simple_name'] = trim($this->data['Record']['simple_name']);
-
-                if ($this->data['Record']['simple_name']) {
-                    $this->data['Record']['name'] = $this->data['Record']['simple_name'] . "." . $this->data['Record']['domain_name'];
-                } else {
-                    $this->data['Record']['name'] = $this->data['Record']['domain_name'];
-                }
-            }
+            $this->createNameFromSimpleName();
 
             //content validator
+            /*
             if (!is_valid_dns_record($this->data['Record']['content'], $this->data['Record']['type'])) {
                 return false;
             }
+            */
 
             //update change_date
             $this->data['Record']['change_date'] = time();

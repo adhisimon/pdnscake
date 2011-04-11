@@ -77,7 +77,18 @@ class Record extends AppModel {
 
             $this->validate['content'] = array(
                 'rule' => array('ip', 'IPV4'),
-                'message' => __('Please supply a valid IP address', true),
+                'message' => __('Please supply a valid IPv4 address', true),
+            );
+
+            $this->validate['simple_name'] = array(
+                'rule' => 'noConflictWithCNAME',
+                'message' => __('Record conflicted with CNAME', true),
+            );
+        } elseif ($this->data['Record']['type'] == 'AAAA') {
+
+            $this->validate['content'] = array(
+                'rule' => array('ip', 'IPV6'),
+                'message' => __('Please supply a valid IPv6 address', true),
             );
 
             $this->validate['simple_name'] = array(

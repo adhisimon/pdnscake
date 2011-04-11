@@ -160,4 +160,55 @@ class RecordsController extends AppController {
         $this->redirect($this->referer());
     }
 
+    function editSoa($id) {
+        $this->set('title_for_layout', __('Edit SOA record', true));
+
+        $this->Record->id = $id;
+
+        if (empty($this->data)) {
+
+            $this->Record->virtualFields = array(
+                //non fqdn of Record.name
+                'simple_name' => 'LEFT(Record.name, LENGTH(Record.name) - LENGTH(Domain.name) - 1)',
+                'domain_name' => 'Domain.name',
+            );
+            $this->data = $this->Record->read();
+
+            $this->set(
+                'title_for_layout',
+                __(sprintf('Edit SOA record for "%s"', $this->data['Record']['domain_name']), true)
+            );
+
+            $soa_content = $this->Record->getSOA($this->data['Record']['domain_id'], true);
+            $this->set('soa_content', $soa_content);
+
+        } else {
+
+            $this->data['Record']['content'] =
+                $this->data['Record']['soa_primary_ns']
+                . ' '
+                . $this->data['Record']['soa_hostmaster']
+                . ' '
+                . $this->data['Record']['soa_serial']
+                ;
+
+            if ($this->Record->save($this->data)) {
+
+                $this->flash(
+                    __('SOA has been saved', true),
+                    array('action' => 'index', 'domain_id' => $this->data['Record']['domain_id'])
+                );
+
+            } else {
+
+                $this->flash(
+                    __('Failed to save SOA', true),
+                    array('action' => 'index', 'domain_id' => $this->data['Record']['domain_id'])
+                );
+
+            }
+
+        }
+    }
+
 }

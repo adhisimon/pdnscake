@@ -61,9 +61,11 @@
             <td class="actions">
 
                 <?php
-                    echo $html->link(__('Edit', true), array('action' => 'edit', $record['Record']['id']));
                     if ($record['Record']['type'] != 'SOA') {
+                        echo $html->link(__('Edit', true), array('action' => 'edit', $record['Record']['id']));
                         echo $html->link(__('Delete', true), array('action' => 'delete', $record['Record']['id']), null, __('Are you sure you want to delete this record?', true));
+                    } else {
+                        echo $html->link(__('Edit', true), array('action' => 'editSoa', $record['Record']['id']));
                     }
                 ?>
 

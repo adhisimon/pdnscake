@@ -26,6 +26,7 @@
             <th><?php echo $this->Paginator->sort('No.', 'Domain.id'); ?></th>
             <th><?php echo $this->Paginator->sort(__('Name', true), 'Domain.name'); ?></th>
             <th><?php echo $this->Paginator->sort(__('Type', true), 'Domain.type'); ?></th>
+            <th><?php echo $this->Paginator->sort(__('Serial', true), 'Domain.notified_serial'); ?></th>
             <th><?php echo $this->Paginator->sort(__('Owner', true), 'User.username'); ?></th>
             <th colspan=2><?php echo $this->Paginator->sort(__('Created', true), 'Domain.created'); ?></th>
         </tr>
@@ -52,6 +53,8 @@
             ?></td>
 
             <td><?php echo $domain['Domain']['type']; ?></td>
+
+            <td><?php echo $domain['Domain']['notified_serial']; ?></td>
 
             <td><?php
 

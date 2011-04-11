@@ -34,14 +34,7 @@ echo $this->Form->hidden('domain_id');
 echo $this->Form->input(
     'type',
     array(
-        'options' => array(
-            'NS' => __('NS (Name Server)', true),
-            'A' => __('A (IPv4 address)', true),
-            'AAAA' => __('AAAA (IPv6 address)', true),
-            'CNAME' => __('CNAME (Alias)', true),
-            'MX' => __('MX (Mail Exchange)', true),
-            'TXT' => __('TXT (Textual Data)', true),
-        )
+        'options' => Configure::read('AvailableRecordTypes')
     )
 );
 

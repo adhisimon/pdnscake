@@ -103,6 +103,11 @@ class Record extends AppModel {
                 'rule' => 'noConflictWithCNAME',
                 'message' => __('Record conflicted with CNAME', true),
             );
+        } else {
+            $this->validate['simple_name'] = array(
+                'rule' => 'noConflictWithCNAME',
+                'message' => __('Record conflicted with CNAME', true),
+            );
         }
 
         return true;

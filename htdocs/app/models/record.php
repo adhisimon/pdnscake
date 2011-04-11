@@ -68,10 +68,18 @@ class Record extends AppModel {
         $this->createNameFromSimpleName();
 
         if ($this->data['Record']['type'] == 'CNAME') {
+            /*
             $this->validate['name'] = array(
                 'rule' => 'isUnique',
                 'message' => __('CNAME record must be unique', true),
             );
+            */
+
+            $this->validate['simple_name'] = array(
+                'rule' => 'noConflictFromCNAME',
+                'message' => __('CNAME record can not be conflicted with other records', true),
+            );
+
         } elseif ($this->data['Record']['type'] == 'A') {
 
             $this->validate['content'] = array(
@@ -97,6 +105,17 @@ class Record extends AppModel {
         }
 
         return true;
+    }
+
+    function noConflictFromCNAME($check) {
+        $conditions['Record.name'] = $this->data['Record']['name'];
+
+        if (!empty($this->id)) {
+            $conditions['Record.id <>'] = $this->id;
+        }
+
+        $count = $this->find('count', array('conditions' => $conditions));
+        return !$count;
     }
 
     function noConflictWithCNAME($check) {

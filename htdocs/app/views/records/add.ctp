@@ -10,26 +10,45 @@
 
 <?php
 
+if (!empty($this->data)) {
+    $after_simple_name =
+        '.'
+        . $html->link(
+            $this->data['Record']['domain_name'],
+            array(
+                'action' => 'index',
+                'domain_id' => $this->data['Record']['domain_id']
+            )
+        );
+} else {
+    $after_simple_name = '';
+}
+
 echo $this->Form->create('Record');
 echo $this->Form->input(
     'simple_name',
     array(
         'style' => 'width: 30%',
         'div' => false,
+        'after' => $after_simple_name,
     )
 );
 
 echo ".";
 
-echo $this->Form->input(
-    'domain_id',
-    array(
-        'div' => false,
-        'label' => false,
-        'default' => $domain_id,
-        'options' => $domains,
-    )
-);
+if (empty($this->data)) {
+    echo $this->Form->input(
+        'domain_id',
+        array(
+            'div' => false,
+            'label' => false,
+            'default' => $domain_id,
+            'options' => $domains,
+        )
+    );
+} else {
+    echo $this->Form->hidden('domain_id');
+}
 
 echo $this->Form->input(
     'type',

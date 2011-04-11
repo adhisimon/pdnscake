@@ -17,10 +17,18 @@ echo $this->Form->input(
     array(
         'style' => 'width: 30%',
         'div' => false,
+        'after' =>
+            '.'
+            . $html->link(
+                $this->data['Record']['domain_name'],
+                array(
+                    'action' => 'index',
+                    'domain_id' => $this->data['Record']['domain_id']
+                )
+            )
     )
 );
 
-echo "." . $this->data['Record']['domain_name'];
 echo $this->Form->hidden('domain_id');
 
 echo $this->Form->input(

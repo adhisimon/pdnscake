@@ -20,19 +20,8 @@ echo $this->Form->input(
     )
 );
 
-echo "." . $this->data['Domain']['name'];
+echo "." . $this->data['Record']['domain_name'];
 echo $this->Form->hidden('domain_id');
-/*
-
-echo $this->Form->input(
-    'domain',
-    array(
-        'div' => false,
-        'label' => false,
-        'default' => $domain_id,
-    )
-);
-*/
 
 echo $this->Form->input(
     'type',

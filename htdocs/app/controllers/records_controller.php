@@ -92,13 +92,16 @@ class RecordsController extends AppController {
 
         if (!empty($this->data)) {
 
-            $user_id = $this->Record->Domain->field('Domain.user_id', array('Domain.id' => $this->data['Record']['domain_id']));
+            $user_id = $this->Record->Domain->field(
+                'Domain.user_id',
+                array('Domain.id' => $this->data['Record']['domain_id'])
+            );
             if (!$this->Auth->user('admin') and ($this->Auth->user('id') != $user_id)) {
                 $this->redirect($this->referer());
             }
 
-            $this->data['Record']['domain_name'] = $this->Record->Domain->field('name', array('Domain.id' => $this->data['Record']['domain']));
-            $this->data['Record']['domain_id'] = $this->data['Record']['domain'];
+            $this->data['Record']['domain_name'] = $this->Record->Domain->field('name', array('Domain.id' => $this->data['Record']['domain_id']));
+            //$this->data['Record']['domain_id'] = $this->data['Record']['domain'];
 
             if ($this->Record->save($this->data)) {
                 $this->Session->setFlash(__('Record has been saved', true));
@@ -120,6 +123,7 @@ class RecordsController extends AppController {
             $this->Record->virtualFields = array(
                 //non fqdn of Record.name
                 'simple_name' => 'LEFT(Record.name, LENGTH(Record.name) - LENGTH(Domain.name) - 1)',
+                'domain_name' => 'Domain.name',
             );
 
             $this->data = $this->Record->read();

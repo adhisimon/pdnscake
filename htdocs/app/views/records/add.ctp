@@ -23,11 +23,12 @@ echo $this->Form->input(
 echo ".";
 
 echo $this->Form->input(
-    'domain',
+    'domain_id',
     array(
         'div' => false,
         'label' => false,
         'default' => $domain_id,
+        'options' => $domains,
     )
 );
 

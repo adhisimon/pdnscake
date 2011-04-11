@@ -6,6 +6,7 @@
  * @author Adhidarma <adhisimon@mondial.co.id>
  */
 
+App::Import('Lib', 'dns_validator');
 /**
  * Implementation of Record model
  *
@@ -76,7 +77,11 @@ class Record extends AppModel {
                 } else {
                     $this->data['Record']['name'] = $this->data['Record']['domain_name'];
                 }
+            }
 
+            //content validator
+            if (!is_valid_dns_record($this->data['Record']['content'], $this->data['Record']['type'])) {
+                return false;
             }
 
             //update change_date

@@ -55,6 +55,7 @@ class Record extends AppModel {
         $result = $this->updateAll(
             array(
                 'Record.content' => "'$new_soa_content'",
+                'Record.change_date' => time(),
                 'Domain.notified_serial' => $serial,
             ),
             array(

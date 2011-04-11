@@ -17,6 +17,17 @@ class Record extends AppModel {
         'Domain'
     );
 
+    function splitSOA($soa_content) {
+        list($primary_ns, $hostmaster, $serial) = split(" ", $soa_content, 3);
+        $soa = array();
+
+        $soa['primary_ns'] = $primary_ns;
+        $soa['hostmaster'] = $hostmaster;
+        $soa['serial'] = $serial;
+
+        return $soa;
+    }
+
     function getSOA($domain_id, $return_array = false) {
 
         $conditions = array(
@@ -28,14 +39,8 @@ class Record extends AppModel {
         $soa = $record['Record']['content'];
 
         if ($return_array) {
-
-            list($primary_ns, $hostmaster, $serial) = split(" ", $soa, 3);
-            $soa = array();
-
+            $soa = $this->splitSOA($soa);
             $soa['id'] = $record['Record']['id'];
-            $soa['primary_ns'] = $primary_ns;
-            $soa['hostmaster'] = $hostmaster;
-            $soa['serial'] = $serial;
         }
 
         return $soa;
@@ -170,6 +175,18 @@ class Record extends AppModel {
     function afterSave($created) {
         if (!isset($this->skipAfterSave) and $this->data['Record']['type'] != 'SOA') {
             $this->incrementSerial($this->data['Record']['domain_id']);
+        }
+
+        if ($this->data['Record']['type'] == 'SOA') {
+            $soa = $this->splitSOA($this->data['Record']['content']);
+            $this->Domain->updateAll(
+                array(
+                    'Domain.notified_serial' => $soa['serial'],
+                ),
+                array(
+                    'Domain.id' => $this->data['Record']['domain_id']
+                )
+            );
         }
     }
 

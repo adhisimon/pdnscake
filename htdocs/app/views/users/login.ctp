@@ -20,11 +20,12 @@ echo $session->flash('auth');
                 'tabindex' => 2,
             )
         );
-        echo $form->end(
+        echo $form->submit(
             __('Login', true),
             array(
                 'tabindex' => 3,
             )
         );
+        echo $form->end();
     ?>
 </fieldset>

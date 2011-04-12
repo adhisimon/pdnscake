@@ -28,6 +28,9 @@ class DomainsController extends AppController {
     function add() {
 
         if(!empty($this->data)) {
+            if(!$this->Auth->user('admin')) {
+                $this->data['Domain']['user_id'] = $this->Auth->user('id');
+            }
 
             if ($this->Domain->save($this->data)) {
 
@@ -43,7 +46,9 @@ class DomainsController extends AppController {
 
             }
         }
-        $users = $this->Domain->User->find('list');
+        if($this->Auth->user('admin')) {
+            $users = $this->Domain->User->find('list');
+        }
 
         /**
          * mengambil pilihan type domain dari information schema

@@ -12,7 +12,7 @@
     <thead>
 
         <tr>
-            <td colspan="6" class="actions">
+            <td colspan="7" class="actions">
 
                 <?php
                     echo $html->link(__('Add a Domain', true), array('action' => 'add'));
@@ -81,7 +81,7 @@
     <?php endforeach; ?>
 
         <tr>
-            <td colspan="6" class="actions">
+            <td colspan="7" class="actions">
 
                 <?php
                     echo $html->link(__('Add a Domain', true), array('action' => 'add'));

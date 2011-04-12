@@ -19,8 +19,6 @@
 class AppController extends Controller {
     var $components = array('Auth', 'Session', 'RequestHandler');
     var $helpers = array('Html', 'Form', 'Session', 'Time');
-    var $ajax = null;
-    var $user_id = null;
     
 
     function beforeFilter() {
@@ -30,11 +28,7 @@ class AppController extends Controller {
         
         if($this->Auth->user('id')) {
             $loggedIn = 1;
-            $this->user_id = $this->Auth->user('id');
         }
-        $this->ajax = $this->RequestHandler->isAjax();
         $this->set(compact('loggedIn'));
-        $this->set('ajax', $this->ajax);
-        $this->set('user_id', $this->user_id);
     }
 }

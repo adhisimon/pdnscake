@@ -42,7 +42,7 @@
                 if($user['User']['active']) {
                     echo __('Active', true);
                 } else {
-                    echo __('Not Active', true);
+                    echo __('Inactive', true);
                 }
             ?></td>
             <td><?php echo $time->niceShort($user['User']['created']); ?></td>

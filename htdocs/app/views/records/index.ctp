@@ -6,6 +6,27 @@
  * @author Adhidarma <adhisimon@mondial.co.id>
  */
 ?>
+<div style='text-align: right;'>
+
+    Domain: <?php
+        if(!empty($this->params['named']['domain_id'])) {
+            $domain_id = $this->params['named']['domain_id'];
+        } else {
+            $domain_id = 0;
+        }
+
+        echo $form->input('Domain.name', array(
+            'type' => 'select'
+            , 'options' => $domains
+            , 'label' => false
+            , 'div' => false
+            , 'style' => 'font-size:10pt;vertical-align:bottom;margin:0;padding:0;'
+            , 'selected' => $domain_id
+            , 'onchange' => 'redirect_domain()'
+        ));
+    ?>
+
+</div>
 <h2><?php echo $title_for_layout; ?></h2>
 
 <?php
@@ -28,19 +49,7 @@
                     echo $html->link(__('Add a record', true), $addUrl);
 
                     echo $html->link(__('Refresh', true), '/' . $this->params['url']['url']);
-                    $domain_id = 0;
-                    if(!empty($this->params['named']['domain_id'])) {
-                        $domain_id = $this->params['named']['domain_id'];
-                    }
-                    echo $form->input('Domain.name', array(
-                        'type' => 'select'
-                        , 'options' => $domains
-                        , 'label' => false
-                        , 'div' => false
-                        , 'style' => 'font-size:10pt;vertical-align:bottom;margin:0;padding:0;'
-                        , 'selected' => $domain_id
-                        , 'onchange' => 'redirect_domain()'
-                    ));
+
                 ?>
             </td>
         </tr>
@@ -113,11 +122,12 @@
     <?php echo $paginator->next(__('Next', true), null, null, array('class' => 'disable')); ?>&nbsp;
     <?php echo $paginator->last(__('Last', true). ' >>'); ?>
 </div>
+
 <script type="text/javascript">
 // <![CDATA[
     function redirect_domain() {
         var select_input = document.getElementById('DomainName');
-        var url = "<?php echo $html->url(array('controller' => 'records', 'action' => 'index', 'domain_id:')) ?>"; 
+        var url = "<?php echo $html->url(array('controller' => 'records', 'action' => 'index', 'domain_id:')) ?>";
         window.location = url + select_input.value;
     }
 // ]]>

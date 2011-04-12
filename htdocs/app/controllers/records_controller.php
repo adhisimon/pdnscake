@@ -66,8 +66,18 @@ class RecordsController extends AppController {
         }
 
         $data = $this->paginate('Record');
+        if($this->Auth->user('admin')) {
+            $domains = $this->Record->Domain->find('list');
+        } else {
+            $domains = $this->Record->Domain->find('list', array(
+                'conditions' => array(
+                    'Domain.user_id' => $this->Auth->user('id')
+                )
+            ));
+        }
         $this->set('data', $data);
-
+        $this->set('domains', $domains);
+        
     }
 
     function add() {

@@ -16,4 +16,4 @@ Licensed under GNU General Public License, version 2.0. Please view "LICENSE.txt
 
 WEBSITE
 -------
-http://code.intra.mondial.co.id/projects/pdnscake/
+https://github.com/adhisimon/pdnscake

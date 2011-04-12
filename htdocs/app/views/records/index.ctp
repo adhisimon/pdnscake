@@ -40,8 +40,6 @@
                         , 'style' => 'font-size:10pt;vertical-align:bottom;margin:0;padding:0;'
                         , 'selected' => $domain_id
                         , 'onchange' => 'redirect_domain()'
-                        , 'empty' => 'dkdl'
-
                     ));
                 ?>
             </td>

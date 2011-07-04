@@ -72,7 +72,7 @@
         <tr>
             <td><?php echo ++$i; ?>.</td>
 
-            <td><?php echo $record['Record']['name']; ?></td>
+            <td><?php echo $record['Record']['simple_name']; ?></td>
             <td><?php echo $record['Record']['type']; ?></td>
             <td><?php echo $record['Record']['prio']; ?></td>
             <td><?php echo $record['Record']['content']; ?></td>

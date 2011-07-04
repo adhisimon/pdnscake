@@ -57,6 +57,7 @@
     <tr>
         <th><?php echo $this->Paginator->sort('No.', 'Record.id'); ?></th>
         <th><?php echo $this->Paginator->sort(__('Name', true), 'Record.simple_name'); ?></th>
+        <th><?php echo $this->Paginator->sort(__('Domain', true), 'Domain.name'); ?></th>
         <th><?php echo $this->Paginator->sort(__('Type', true), 'Record.type'); ?></th>
         <th><?php echo $this->Paginator->sort(__('Priority', true), 'Record.prio'); ?></th>
         <th><?php echo $this->Paginator->sort(__('Value', true), 'Record.content'); ?></th>
@@ -72,7 +73,8 @@
         <tr>
             <td><?php echo ++$i; ?>.</td>
 
-            <td><?php echo $record['Record']['simple_name']; ?></td>
+            <td style="text-align: right; "><?php echo $record['Record']['simple_name']; ?></td>
+            <td nowrap><?php echo $record['Domain']['name']; ?></td>
             <td><?php echo $record['Record']['type']; ?></td>
             <td><?php echo $record['Record']['prio']; ?></td>
             <td><?php echo $record['Record']['content']; ?></td>

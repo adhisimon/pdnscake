@@ -110,8 +110,10 @@ class Record extends AppModel {
             );
         } elseif ($this->data['Record']['type'] == 'PTR') {
             $this->validate['simple_name'] = array(
-                'rule' => 'uniquePTR',
-                'message' => __('PTR record must be unique', true),
+                'valid' => array(
+                    'rule' => 'validPTR',
+                    'message' => __('PTR record must be numeric and not begin with 0', true),
+                ),
             );
         } else {
             $this->validate['simple_name'] = array(
@@ -133,6 +135,18 @@ class Record extends AppModel {
 
         $count = $this->find('count', array('conditions' => $conditions));
         return !$count;
+    }
+
+    function validPTR($check) {
+        $allowed_chars =
+            !preg_match('/^0/', $this->data['Record']['simple_name'])
+            and !preg_match("/[^0-9\.]/", $this->data['Record']['simple_name']);
+
+        if ($allowed_chars) {
+            return $this->uniquePTR($check);
+        } else {
+            return false;
+        }
     }
 
     function noConflictFromCNAME($check) {

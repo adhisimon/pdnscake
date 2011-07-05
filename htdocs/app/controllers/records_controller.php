@@ -38,12 +38,10 @@ class RecordsController extends AppController {
 
         # filter by record name
         if (!empty($this->params['url']['search'])) {
-            /*
             $this->paginate['conditions']['OR'] = array(
                 'Record.simple_name' => $this->params['url']['search'],
                 'Record.name LIKE' => $this->params['url']['search']
             );
-            */
         }
 
         $this->set('title_for_layout', __(sprintf('Available Records on %s', $domain_name), true));

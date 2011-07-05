@@ -15,7 +15,6 @@
 class RecordsController extends AppController {
     var $scaffold;
 
-
     function index() {
         # filter jika bukan admin
         if (!$this->Auth->user('admin')) {

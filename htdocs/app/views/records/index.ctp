@@ -6,16 +6,6 @@
  * @author Adhidarma <adhisimon@mondial.co.id>
  */
 
-
-/*
-$this->Paginator->options(array(
-    'url' => array(
-        '?' => 'q'
-    )
-));
-*/
-
-
 # paginator configuration if it was filtered by search
 if (!empty($this->params['url']['search'])) {
     $this->Paginator->options(array(
@@ -49,9 +39,26 @@ if (!empty($this->params['url']['search'])) {
 </div>
 
 <br/>
+
 <form style="margin: 0; width: 100%; text-align: right;">
-Search:
-<input type="text" name="search" style="vertical-align:bottom;margin:0;padding:0; width: 200px;" />
+<?php
+    if (!empty($this->params['url']['search'])) {
+        $last_search = $this->params['url']['search'];
+    } else {
+        $last_search = '';
+    }
+
+    echo $this->Form->input(
+        'search',
+        array(
+            'name' => 'search',
+            'label' => false,
+            'div' => false,
+            'style' => "vertical-align:bottom;margin:0;padding:0; width: 200px;",
+            'default' => $last_search
+        )
+    );
+?>
 </form>
 
 <h2><?php echo $title_for_layout; ?></h2>

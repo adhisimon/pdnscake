@@ -43,6 +43,11 @@ class RecordsController extends AppController {
             );
         }
 
+        # paginate limit
+        if (!empty($this->params['named']['paginate_limit'])) {
+            $this->paginate['limit'] = $this->params['named']['paginate_limit'];
+        }
+
         # set title for layout
         $title_for_layout = __(sprintf('Available Records on %s', $domain_name), true);
         if (!empty($this->params['url']['search'])) {

@@ -160,12 +160,62 @@ if (!empty($this->params['url']['search'])) {
     <?php echo $paginator->last(__('Last', true). ' >>'); ?>
 </div>
 
+<br/><br/>
+Show
+
+<?php
+    $paginate_limit_options = array(10 => 10, 20 => 20, 50 => 50, 100 => 100);
+
+    if (!empty($this->params['named']['paginate_limit'])) {
+        $paginate_limit = $this->params['named']['paginate_limit'];
+    } else {
+        $paginate_limit = 20;
+    }
+
+    echo $form->input('Row.count', array(
+        'type' => 'select',
+        'options' => $paginate_limit_options,
+        'label' => false,
+        'div' => false,
+        'style' => 'font-size:10pt;vertical-align:bottom;margin:0;padding:0;',
+        'selected' => $paginate_limit,
+        'onchange' => 'redirect_rows_option()'
+    ));
+?>
+
+rows per page
+
 <script type="text/javascript">
 // <![CDATA[
     function redirect_domain() {
         var select_input = document.getElementById('DomainName');
         var url = "<?php echo $html->url(array('controller' => 'records', 'action' => 'index', 'domain_id:')) ?>";
         window.location = url + select_input.value;
+    }
+
+    function redirect_rows_option() {
+        var select_input = document.getElementById('RowCount');
+        var url = "<?php
+            $redirect_url = array('action' => 'index', 'true' => 1);
+            if (!empty($this->params['named'])) {
+                $redirect_url = array_merge($redirect_url, $this->params['named']);
+            }
+
+            unset($redirect_url['paginate_limit']);
+
+            echo $html->url($redirect_url);
+
+        ?>";
+
+        var search = "<?php
+            $additional_query = '?search=';
+            if (!empty($this->params['url']['search'])) {
+                $additional_query .= urlencode($this->params['url']['search']);
+            }
+
+            echo $additional_query;
+        ?>";
+        window.location = url + '/paginate_limit:' + select_input.value + search;
     }
 // ]]>
 </script>

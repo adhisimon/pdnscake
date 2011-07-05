@@ -102,8 +102,7 @@ class DomainsController extends AppController {
     }
 
     function getSOA($id, $return_array = false) {
-        $this->loadModel('Record');
-        return $this->Record->getSOA($id, $return_array);
+        return $this->Domain->Record->getSOA($id, $return_array);
     }
 
     function getSerial($id) {

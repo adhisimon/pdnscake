@@ -48,6 +48,7 @@ if (!empty($this->params['url']['search'])) {
         $last_search = '';
     }
 
+    echo 'Search:<br/>';
     echo $this->Form->input(
         'search',
         array(
@@ -73,7 +74,7 @@ if (!empty($this->params['url']['search'])) {
     <thead>
 
         <tr>
-            <td colspan=8 class="actions">
+            <td colspan=9 class="actions">
 
                 <?php
                     $addUrl = array('action' => 'add');
@@ -133,7 +134,7 @@ if (!empty($this->params['url']['search'])) {
     <?php endforeach; ?>
 
         <tr>
-            <td colspan=8 class="actions">
+            <td colspan=9 class="actions">
 
                 <?php
                     $addUrl = array('action' => 'add');

@@ -12,7 +12,10 @@
 
 <ul>
     <li>
-        Owner: <?php echo $domain['User']['username']; ?>
+        Owner:
+        <?php
+            echo $html->link($domain['User']['username'], array('controller' => 'users', 'action' => 'view', $domain['User']['id']));
+        ?>
     </li>
     <li>
         Serial: <?php echo $this->requestAction("/domains/getSerial/$id"); ?>

@@ -201,20 +201,6 @@ class Record extends AppModel {
         if (!isset($this->skipAfterSave) and $this->data['Record']['type'] != 'SOA') {
             $this->incrementSerial($this->data['Record']['domain_id']);
         }
-
-        if ($this->data['Record']['type'] == 'SOA') {
-            $soa = $this->splitSOA($this->data['Record']['content']);
-            $this->Domain->updateAll(
-                /*
-                array(
-                    'Domain.notified_serial' => $soa['serial'],
-                ),
-                */
-                array(
-                    'Domain.id' => $this->data['Record']['domain_id']
-                )
-            );
-        }
     }
 
     function beforeDelete($cascade) {

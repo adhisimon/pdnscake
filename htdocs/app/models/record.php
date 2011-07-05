@@ -74,12 +74,6 @@ class Record extends AppModel {
         $this->createNameFromSimpleName();
 
         if ($this->data['Record']['type'] == 'CNAME') {
-            /*
-            $this->validate['name'] = array(
-                'rule' => 'isUnique',
-                'message' => __('CNAME record must be unique', true),
-            );
-            */
 
             $this->validate['simple_name'] = array(
                 'rule' => 'noConflictFromCNAME',

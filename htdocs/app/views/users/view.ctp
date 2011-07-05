@@ -88,3 +88,14 @@
     </tr>
 
 </table>
+
+<br/>
+<?php
+    echo $html->link(
+        __('List of domains', true),
+        array(
+            'controller' => 'domains',
+            'action' => 'index',
+        )
+    );
+?>

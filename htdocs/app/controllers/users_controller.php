@@ -28,6 +28,11 @@ class UsersController extends AppController {
     }
 
     function add() {
+        if (!$this->Auth->User('admin')) {
+            $this->Session->setFlash($this->Auth->authError);
+            $this->redirect('/');
+        }
+
         if(!empty($this->data)) {
             $this->User->save($this->data);
             $this->Session->setFlash(__('User Saved', true));
@@ -37,11 +42,21 @@ class UsersController extends AppController {
     }
 
     function index() {
+        if (!$this->Auth->User('admin')) {
+            $this->Session->setFlash($this->Auth->authError);
+            $this->redirect('/');
+        }
+
         $users = $this->paginate('User');
         $this->set(compact('users'));
     }
 
     function edit($id = null) {
+        if ((!$this->Auth->user('admin')) and ($id != $this->Auth->User('id'))) {
+            $this->Session->setFlash($this->Auth->authError);
+            $this->redirect('/');
+        }
+
         $user = $this->User->read(null, $id);
         if(empty($user)) {
             echo $this->Session->setFlash(__('Invalid Id', true));
@@ -49,6 +64,12 @@ class UsersController extends AppController {
         }
 
         if(!empty($this->data)) {
+
+            if ((!$this->Auth->user('admin')) and ($this->data['User']['id'] != $this->Auth->User('id'))) {
+                $this->Session->setFlash($this->Auth->authError);
+                $this->redirect($this->referer());
+            }
+
             $this->User->save($this->data);
             echo $this->Session->setFlash(__('User Saved', true));
             $this->redirect(array('action' => 'index'));
@@ -59,6 +80,11 @@ class UsersController extends AppController {
     }
 
     function delete($id = null) {
+        if (!$this->Auth->User('admin')) {
+            $this->Session->setFlash($this->Auth->authError);
+            $this->redirect('/');
+        }
+
         if(!$id) {
             echo $this->Session->setFlash(__('Invalid Id', true));
             $this->redirect(array('action' => 'index'));
@@ -75,6 +101,11 @@ class UsersController extends AppController {
     }
 
     function view($id = null) {
+        if ((!$this->Auth->user('admin')) and ($id != $this->Auth->User('id'))) {
+            $this->Session->setFlash($this->Auth->authError);
+            $this->redirect('/');
+        }
+
         $user = $this->User->read(null, $id);
         if(!$user) {
             echo $this->Session->setFlash(__('Invalid Id', true));
@@ -84,17 +115,9 @@ class UsersController extends AppController {
         $this->set(compact('user'));
     }
 
-    function beforeFilter() {
-        if(!$this->Auth->user('admin') && $this->params['action'] != 'login' && $this->params['action'] != 'logout') {
-            echo $this->Session->setFlash(__('You are not authorized to access that location.', true));
-            $this->redirect(array('controller' => 'domains', 'action' => 'index'));
-        }
-        parent::beforeFilter();
-    }
-
     function editPassword($id = null) {
         if ((!$this->Auth->user('admin')) and ($id != $this->Auth->User('id'))) {
-            $this->Session->setFlash($this->authError);
+            $this->Session->setFlash($this->Auth->authError);
             $this->redirect('/');
         }
 

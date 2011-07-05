@@ -17,4 +17,10 @@
     <li>
         Serial: <?php echo $this->requestAction("/domains/getSerial/$id"); ?>
     </li>
+
+    <?php if ($domain['Domain']['type'] == 'MASTER'): ?>
+    <li>
+        Notified Serial: <?php echo $domain['Domain']['notified_serial']; ?>
+    </li>
+    <?php endif; ?>
 </ul>

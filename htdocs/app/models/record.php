@@ -108,6 +108,11 @@ class Record extends AppModel {
                 'rule' => 'noConflictWithCNAME',
                 'message' => __('Record conflicted with CNAME', true),
             );
+        } elseif ($this->data['Record']['type'] == 'PTR') {
+            $this->validate['simple_name'] = array(
+                'rule' => 'uniquePTR',
+                'message' => __('PTR record must be unique', true),
+            );
         } else {
             $this->validate['simple_name'] = array(
                 'rule' => 'noConflictWithCNAME',
@@ -116,6 +121,18 @@ class Record extends AppModel {
         }
 
         return true;
+    }
+
+    function uniquePTR($check) {
+        $conditions['Record.name'] = $this->data['Record']['name'];
+        $conditions['Record.type'] = 'PTR';
+
+        if (!empty($this->id)) {
+            $conditions['Record.id <>'] = $this->id;
+        }
+
+        $count = $this->find('count', array('conditions' => $conditions));
+        return !$count;
     }
 
     function noConflictFromCNAME($check) {

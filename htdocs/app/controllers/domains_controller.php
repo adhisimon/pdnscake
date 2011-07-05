@@ -112,6 +112,16 @@ class DomainsController extends AppController {
         return $soa['serial'];
     }
 
+    function getLastModified($id) {
+        $conditions = array(
+            'Record.domain_id' => $id
+        );
 
-
+        $last_modified = $this->Domain->Record->field(
+            'Record.change_date',
+            $conditions,
+            'Record.change_date DESC'
+        );
+        return $last_modified;
+    }
 }

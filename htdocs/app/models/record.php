@@ -61,7 +61,7 @@ class Record extends AppModel {
             array(
                 'Record.content' => "'$new_soa_content'",
                 'Record.change_date' => time(),
-                'Domain.notified_serial' => $serial,
+                //'Domain.notified_serial' => $serial,
             ),
             array(
                 'Record.domain_id' => $domain_id,
@@ -205,9 +205,11 @@ class Record extends AppModel {
         if ($this->data['Record']['type'] == 'SOA') {
             $soa = $this->splitSOA($this->data['Record']['content']);
             $this->Domain->updateAll(
+                /*
                 array(
                     'Domain.notified_serial' => $soa['serial'],
                 ),
+                */
                 array(
                     'Domain.id' => $this->data['Record']['domain_id']
                 )

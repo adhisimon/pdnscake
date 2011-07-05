@@ -43,7 +43,16 @@ class RecordsController extends AppController {
             );
         }
 
-        $this->set('title_for_layout', __(sprintf('Available Records on %s', $domain_name), true));
+        # set title for layout
+        $title_for_layout = __(sprintf('Available Records on %s', $domain_name), true);
+        if (!empty($this->params['url']['search'])) {
+
+            $title_for_layout .=
+                ' '
+                . sprintf(__('(filter: "%s")', true), $this->params['url']['search']);
+
+        }
+        $this->set('title_for_layout', $title_for_layout);
 
         $this->Record->virtualFields = array(
             //non fqdn of Record.name

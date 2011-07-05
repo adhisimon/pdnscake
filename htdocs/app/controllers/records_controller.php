@@ -17,10 +17,12 @@ class RecordsController extends AppController {
 
 
     function index() {
+        # filter jika bukan admin
         if (!$this->Auth->user('admin')) {
             $this->paginate['conditions']['Domain.user_id'] = $this->Auth->user('id');
         }
 
+        # filter by domain
         if (!empty($this->params['named']['domain_id'])) {
 
             $this->paginate['conditions']['Domain.id'] = $this->params['named']['domain_id'];
@@ -32,6 +34,16 @@ class RecordsController extends AppController {
 
         } else {
             $domain_name = __('All Domains', true);
+        }
+
+        # filter by record name
+        if (!empty($this->params['url']['search'])) {
+            /*
+            $this->paginate['conditions']['OR'] = array(
+                'Record.simple_name' => $this->params['url']['search'],
+                'Record.name LIKE' => $this->params['url']['search']
+            );
+            */
         }
 
         $this->set('title_for_layout', __(sprintf('Available Records on %s', $domain_name), true));
@@ -77,7 +89,7 @@ class RecordsController extends AppController {
         }
         $this->set('data', $data);
         $this->set('domains', $domains);
-        
+
     }
 
     function add() {

@@ -5,6 +5,27 @@
  * @package pdnscake
  * @author Adhidarma <adhisimon@mondial.co.id>
  */
+
+
+/*
+$this->Paginator->options(array(
+    'url' => array(
+        '?' => 'q'
+    )
+));
+*/
+
+
+# paginator configuration if it was filtered by search
+if (!empty($this->params['url']['search'])) {
+    $this->Paginator->options(array(
+        'url' => array(
+            '?' => array(
+                'search' => $this->params['url']['search']
+            )
+        ) + $this->passedArgs
+    ));
+}
 ?>
 <div style='text-align: right;'>
 
@@ -25,8 +46,14 @@
             , 'onchange' => 'redirect_domain()'
         ));
     ?>
-
 </div>
+
+<br/>
+<form style="margin: 0; width: 100%; text-align: right;">
+Search:
+<input type="text" name="search" style="vertical-align:bottom;margin:0;padding:0; width: 200px;" />
+</form>
+
 <h2><?php echo $title_for_layout; ?></h2>
 
 <?php

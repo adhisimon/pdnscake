@@ -50,6 +50,9 @@
             <td class="actions">
                 <?php
                     echo $html->link(__('Edit', true), array('action' => 'edit', $user['User']['id']));
+
+                    echo $html->link(__('Change Password', true), array('action' => 'editPassword', $user['User']['id']));
+
                     echo $html->link(
                         __('delete', true),
                         array(
@@ -59,6 +62,7 @@
                         null,
                         sprintf(__("Are you sure you want to delete user %s?", true), $user['User']['username'])
                     );
+
                 ?>
 
             </td>

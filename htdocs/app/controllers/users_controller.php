@@ -71,14 +71,14 @@ class UsersController extends AppController {
             $this->redirect(array('action' => 'index'));
         }
 
-        
+
     }
 
     function view($id = null) {
         $user = $this->User->read(null, $id);
         if(!$user) {
             echo $this->Session->setFlash(__('Invalid Id', true));
-            $this->redirect(array('action' => 'index'));            
+            $this->redirect(array('action' => 'index'));
         }
 
         $this->set(compact('user'));
@@ -87,9 +87,49 @@ class UsersController extends AppController {
     function beforeFilter() {
         if(!$this->Auth->user('admin') && $this->params['action'] != 'login' && $this->params['action'] != 'logout') {
             echo $this->Session->setFlash(__('You are not authorized to access that location.', true));
-            $this->redirect(array('controller' => 'domains', 'action' => 'index'));            
+            $this->redirect(array('controller' => 'domains', 'action' => 'index'));
         }
         parent::beforeFilter();
+    }
+
+    function editPassword($id = null) {
+        if ((!$this->Auth->user('admin')) and ($id != $this->Auth->User('id'))) {
+            $this->Session->setFlash($this->authError);
+            $this->redirect('/');
+        }
+
+        if (empty($this->data)) {
+
+            if (!$id) {
+                $this->redirect(array($this->Auth->User('id')));
+            }
+
+            $this->User->id = $id;
+            $user = $this->User->read();
+            $this->set('user', $user);
+
+        } else {
+
+            if ($this->data['User']['new_password'] != $this->data['User']['retype_new_password']) {
+                $this->Session->setFlash(__("Password didn't match", true));
+                $this->redirect($this->referer());
+            }
+
+            if ((!$this->Auth->user('admin')) and ($this->data['User']['id'] != $this->Auth->User('id'))) {
+                $this->Session->setFlash($this->Auth->authError);
+                $this->redirect($this->referer());
+            }
+
+            $this->data['User']['password'] = $this->Auth->password($this->data['User']['new_password']);
+
+            if ($this->User->save($this->data)) {
+                $this->Session->setFlash(__('Password has been changed', true));
+            } else {
+                $this->Session->setFlash(__('Error changing password', true));
+            }
+            $this->redirect(array('action' => 'view', $this->data['User']['id']));
+        }
+
     }
 
 }

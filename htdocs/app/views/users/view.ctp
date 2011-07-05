@@ -4,6 +4,39 @@
  */
 ?>
 <h2><?php echo __('User', true); ?></h2>
+
+<div style="text-align: right;">
+    [
+
+    <?php
+        echo $html->link(
+            __('Edit', true),
+            array(
+                'action' => 'edit',
+                $user['User']['id']
+            )
+        );
+    ?>
+
+    ]
+
+    [
+
+    <?php
+        echo $html->link(
+            __('Change Password', true),
+            array(
+                'action' => 'editPassword',
+                $user['User']['id']
+            )
+        );
+    ?>
+
+    ]
+
+
+</div>
+
 <table cellspacing="0">
     <tr>
         <td><?php echo __('Username', true); ?></td>

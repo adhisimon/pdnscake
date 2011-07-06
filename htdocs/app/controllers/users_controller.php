@@ -20,7 +20,7 @@ class UsersController extends AppController {
     var $helpers = array('Time');
 
     function login() {
-
+        $this->set('auth_error_message', $this->Auth->authError);
     }
 
     function logout() {

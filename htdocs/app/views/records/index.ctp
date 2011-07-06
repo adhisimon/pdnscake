@@ -106,7 +106,7 @@ if (!empty($this->params['url']['search'])) {
     <?php $i = 0; foreach ($data as $record): ?>
 
         <tr>
-            <td><?php echo ++$i; ?>.</td>
+            <td style="text-align: right;"><?php echo ++$i; ?>.</td>
 
             <td style="text-align: right; "><?php echo $record['Record']['simple_name']; ?></td>
             <td nowrap><?php echo $record['Domain']['name']; ?></td>

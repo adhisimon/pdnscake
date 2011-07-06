@@ -2,7 +2,13 @@
 /**
  * view of users/login
  */
-echo $session->flash('auth');
+
+
+# display authentication message
+    $flash_auth = $this->Session->flash('auth');
+    if (!preg_match("/$auth_error_message/", $flash_auth)) {
+        echo $flash_auth;
+    }
 ?>
 
 <fieldset>

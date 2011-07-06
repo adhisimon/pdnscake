@@ -14,7 +14,10 @@
     <li>
         Owner:
         <?php
-            echo $html->link($domain['User']['username'], array('controller' => 'users', 'action' => 'view', $domain['User']['id']));
+            echo $html->link(
+                $domain['User']['fullname'] . ' (' . $domain['User']['username']. ')',
+                array('controller' => 'users', 'action' => 'view', $domain['User']['id'])
+            );
         ?>
     </li>
 

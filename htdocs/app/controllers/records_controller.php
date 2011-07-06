@@ -26,6 +26,9 @@ class RecordsController extends AppController {
 
             $this->paginate['conditions']['Domain.id'] = $this->params['named']['domain_id'];
 
+            $domain = $this->Record->Domain->find('first', array('conditions' => $this->paginate['conditions']));
+            $this->set('domain', $domain);
+
             $domain_name = $this->Record->Domain->field('name', $this->paginate['conditions']);
             if (!$domain_name) {
                 $this->flash($this->Auth->authError, $this->referer());

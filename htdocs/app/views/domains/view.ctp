@@ -45,12 +45,12 @@
     <li>
         Notified Serial: <?php echo $domain['Domain']['notified_serial']; ?>
     </li>
-    <?php endif; ?>
 
     <li>
         Last Modified:
 
         <?php echo date("Y-m-d H-i-s", $this->requestAction("/domains/getLastModified/$id")); ?>
     </li>
+    <?php endif; ?>
 
 </ul>

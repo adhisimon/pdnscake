@@ -6,6 +6,14 @@
  * @author Adhidarma <adhisimon@mondial.co.id>
  */
 
+$isReadOnly = ((!empty($domain)) AND ($domain['Domain']['type'] == 'SLAVE'));
+
+if ($isReadOnly) {
+    $colspan = 7;
+} else {
+    $colspan = 9;
+}
+
 # paginator configuration if it was filtered by search
 if (!empty($this->params['url']['search'])) {
     $this->Paginator->options(array(
@@ -74,14 +82,17 @@ if (!empty($this->params['url']['search'])) {
     <thead>
 
         <tr>
-            <td colspan=9 class="actions">
+            <td colspan=<?php echo $colspan; ?> class="actions">
 
                 <?php
-                    $addUrl = array('action' => 'add');
-                    if (!empty($this->params['named']['domain_id'])) {
-                        $addUrl += array('domain_id' => $this->params['named']['domain_id']);
+
+                    if (!$isReadOnly) {
+                        $addUrl = array('action' => 'add');
+                        if (!empty($this->params['named']['domain_id'])) {
+                            $addUrl += array('domain_id' => $this->params['named']['domain_id']);
+                        }
+                        echo $html->link(__('Add a record', true), $addUrl);
                     }
-                    echo $html->link(__('Add a record', true), $addUrl);
 
                     echo $html->link(__('Refresh', true), '/' . $this->params['url']['url']);
 
@@ -97,8 +108,11 @@ if (!empty($this->params['url']['search'])) {
         <th><?php echo $this->Paginator->sort(__('Priority', true), 'Record.prio'); ?></th>
         <th><?php echo $this->Paginator->sort(__('Value', true), 'Record.content'); ?></th>
         <th><?php echo $this->Paginator->sort(__('TTL', true), 'Record.ttl'); ?></th>
+
+        <?php if (!$isReadOnly): ?>
         <th><?php echo $this->Paginator->sort(__('Modified', true), 'Record.change_date'); ?></th>
         <th>&nbsp;</th>
+        <?php endif; ?>
     </tr>
     </thead>
 
@@ -115,6 +129,8 @@ if (!empty($this->params['url']['search'])) {
             <td><?php echo $record['Record']['prio']; ?></td>
             <td><?php echo $record['Record']['content']; ?></td>
             <td><?php echo $record['Record']['ttl']; ?></td>
+
+            <?php if (!$isReadOnly) { ?>
             <td><?php
                 if ($record['Record']['change_date']) {
                     //echo date("Y-m-d H-i-s", $record['Record']['change_date']);
@@ -128,22 +144,25 @@ if (!empty($this->params['url']['search'])) {
             <td class="actions">
 
                 <?php
+
                     if ($record['Record']['type'] != 'SOA') {
                         echo $html->link(__('Edit', true), array('action' => 'edit', $record['Record']['id']));
                         echo $html->link(__('Delete', true), array('action' => 'delete', $record['Record']['id']), null, __('Are you sure you want to delete this record?', true));
                     } else {
                         echo $html->link(__('Edit', true), array('action' => 'editSoa', $record['Record']['id']));
                     }
+
                 ?>
 
             </td>
+            <?php } //end of if not slave domain ?>
 
         </tr>
 
     <?php endforeach; ?>
 
         <tr>
-            <td colspan=9 class="actions">
+            <td colspan=<?php echo $colspan; ?> class="actions">
 
                 <?php
                     $addUrl = array('action' => 'add');

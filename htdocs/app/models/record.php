@@ -18,7 +18,14 @@ class Record extends AppModel {
     );
 
     function splitSOA($soa_content) {
-        list($primary_ns, $hostmaster, $serial) = split(" ", $soa_content, 3);
+        $array_of_soa_content = split(" ", $soa_content, 3);
+        if (count($array_of_soa_content) >= 3) {
+            list($primary_ns, $hostmaster, $serial) = $array_of_soa_content;
+        } else {
+            $primary_ns = '';
+            $hostmaster = '';
+            $serial = '';
+        }
         $soa = array();
 
         $soa['primary_ns'] = $primary_ns;

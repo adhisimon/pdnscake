@@ -57,7 +57,7 @@
             if($user['User']['admin']) {
                 echo __('Admin', true);
             } else {
-                echo __('Not Admin', true);
+                echo __('Normal User', true);
             }
         ?></td>
 

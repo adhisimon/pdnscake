@@ -97,7 +97,8 @@ if (!empty($this->params['url']['search'])) {
         <th><?php echo $this->Paginator->sort(__('Priority', true), 'Record.prio'); ?></th>
         <th><?php echo $this->Paginator->sort(__('Value', true), 'Record.content'); ?></th>
         <th><?php echo $this->Paginator->sort(__('TTL', true), 'Record.ttl'); ?></th>
-        <th colspan=2><?php echo $this->Paginator->sort(__('Modified', true), 'Record.change_date'); ?></th>
+        <th><?php echo $this->Paginator->sort(__('Modified', true), 'Record.change_date'); ?></th>
+        <th>&nbsp;</th>
     </tr>
     </thead>
 
@@ -114,7 +115,13 @@ if (!empty($this->params['url']['search'])) {
             <td><?php echo $record['Record']['prio']; ?></td>
             <td><?php echo $record['Record']['content']; ?></td>
             <td><?php echo $record['Record']['ttl']; ?></td>
-            <td><?php echo date("Y-m-d H-i-s", $record['Record']['change_date']); ?></td>
+            <td><?php
+                if ($record['Record']['change_date']) {
+                    echo date("Y-m-d H-i-s", $record['Record']['change_date']);
+                } else {
+                    echo '&nbsp';
+                }
+            ?></td>
 
             <td class="actions">
 

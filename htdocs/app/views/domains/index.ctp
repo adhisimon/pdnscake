@@ -12,7 +12,7 @@
     <thead>
 
         <tr>
-            <td colspan="7" class="actions">
+            <td colspan="6" class="actions">
 
                 <?php
                     echo $html->link(__('Add a Domain', true), array('action' => 'add'));
@@ -26,7 +26,6 @@
             <th><?php echo $this->Paginator->sort('No.', 'Domain.id'); ?></th>
             <th><?php echo $this->Paginator->sort(__('Name', true), 'Domain.name'); ?></th>
             <th><?php echo $this->Paginator->sort(__('Type', true), 'Domain.type'); ?></th>
-            <th><?php echo $this->Paginator->sort(__('Serial', true), 'Domain.notified_serial'); ?></th>
             <th><?php echo $this->Paginator->sort(__('Owner', true), 'User.username'); ?></th>
             <th colspan=2><?php echo $this->Paginator->sort(__('Created', true), 'Domain.created'); ?></th>
         </tr>
@@ -54,8 +53,6 @@
 
             <td><?php echo $domain['Domain']['type']; ?></td>
 
-            <td><?php echo $domain['Domain']['notified_serial']; ?></td>
-
             <td><?php
 
                 echo $html->link(
@@ -81,7 +78,7 @@
     <?php endforeach; ?>
 
         <tr>
-            <td colspan="7" class="actions">
+            <td colspan="6" class="actions">
 
                 <?php
                     echo $html->link(__('Add a Domain', true), array('action' => 'add'));

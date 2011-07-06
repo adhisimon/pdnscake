@@ -17,6 +17,26 @@
             echo $html->link($domain['User']['username'], array('controller' => 'users', 'action' => 'view', $domain['User']['id']));
         ?>
     </li>
+
+    <li>
+        Domain Type: <?php echo $domain['Domain']['type']; ?>
+    </li>
+
+    <?php if ($domain['Domain']['type'] == 'SLAVE'): ?>
+    <li>
+        Master:
+        <?php
+            $domain_master =  $domain['Domain']['master'];
+            echo empty($domain_master) ? __('no master has specified', true) : $domain_master;
+
+
+            echo ' [';
+            echo $html->link(__('Edit Master', true), array('action' => 'editMaster', $domain['Domain']['id']));
+            echo ']';
+        ?>
+    </li>
+    <?php endif; ?>
+
     <li>
         Serial: <?php echo $this->requestAction("/domains/getSerial/$id"); ?>
     </li>

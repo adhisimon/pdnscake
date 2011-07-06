@@ -123,4 +123,38 @@ class DomainsController extends AppController {
         );
         return $last_modified;
     }
+
+    function editMaster($id) {
+        $this->Domain->id = $id;
+        $domain = $this->Domain->read();
+        $this->set('domain', $domain);
+
+        # check authorization
+        if (!$this->Auth->User('admin') and ($domain['Domain']['user_id'] != $this->Auth->User('id'))) {
+            $this->Session->setFlash($this->Auth->authError);
+            $this->redirect('/');
+        }
+
+        # there's a data
+        if (!empty($this->data)) {
+
+            # check authorization
+            if (!$this->Auth->User('admin') and ($this->data['Domain']['id'] != $id)) {
+                $this->Session->setFlash($this->Auth->authError);
+                $this->redirect('/');
+            }
+
+            # try to save
+            if ($this->Domain->save($this->data)) {
+                $this->Session->setFlash(sprintf(__('Master for %s has been saved', true), $domain_name));
+            } else {
+                $this->Session->setFlash(sprintf(__('Failed to save master for %s', true), $domain_name));
+            }
+
+            # redirect
+            $this->redirect(array(
+                'controller' => 'records', 'action' => 'index', 'domain_id' => $this->data['Domain']['id']
+            ));
+        }
+    }
 }

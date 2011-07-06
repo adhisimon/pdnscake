@@ -117,7 +117,9 @@ if (!empty($this->params['url']['search'])) {
             <td><?php echo $record['Record']['ttl']; ?></td>
             <td><?php
                 if ($record['Record']['change_date']) {
-                    echo date("Y-m-d H-i-s", $record['Record']['change_date']);
+                    //echo date("Y-m-d H-i-s", $record['Record']['change_date']);
+
+                    echo $time->niceShort($record['Record']['change_date']);
                 } else {
                     echo '&nbsp';
                 }

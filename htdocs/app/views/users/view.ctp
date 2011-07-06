@@ -91,6 +91,28 @@
 
 <br/>
 <?php
+    if ($this->Session->read('Auth.User.admin')) {
+        echo $html->link(
+            __('List of  users', true),
+            array(
+                'controller' => 'users',
+                'action' => 'index',
+            )
+        );
+
+        echo '<br/>';
+        echo $html->link(
+            __('Create a user', true),
+            array(
+                'controller' => 'users',
+                'action' => 'add',
+            )
+        );
+    }
+?>
+
+<br/>
+<?php
     echo $html->link(
         __('List of domains', true),
         array(
